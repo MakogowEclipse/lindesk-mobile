@@ -1,0 +1,563 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"><title>Lindesk</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https: wss: data: blob:; connect-src *; media-src * blob:">
+<style>
+:root{--g:#009c3b;--y:#ffdf00;--b:#002776;--bg:#07130c;--p:#0c1d13;--p2:#12291b;--t:#eaf5ec;--mut:#8fae9a;--grad:linear-gradient(135deg,#009c3b,#ffdf00);--meh:72px}
+*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,sans-serif;background:var(--bg);color:var(--t);height:100vh;overflow:hidden}
+button,input{font:inherit;border:0;outline:0}input{background:#06100a;color:var(--t);width:100%;margin:5px 0;padding:13px 14px;border-radius:8px;border:1px solid #1d3a28}
+input:focus{border-color:var(--y)}button{cursor:pointer;border-radius:10px;padding:12px 20px;min-height:46px;background:var(--grad);color:#06210f;font-weight:700}
+button:hover{filter:brightness(1.08)}button:focus-visible{outline:2px solid var(--y);outline-offset:2px}button.g{background:var(--p2);color:var(--t);border:1px solid #1d3a28}button.r{background:#c0392b;color:#fff}
+#auth{height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 20% 10%,#ffdf0055,transparent 45%),radial-gradient(circle at 85% 90%,#00277899,transparent 50%),linear-gradient(135deg,#00552a,#07130c)}
+.card{width:min(420px,92vw);padding:32px;border-radius:16px;background:#0c1d13ee;border:1px solid #1d3a28;border-top:4px solid var(--b);box-shadow:0 20px 60px #0008;text-align:center}
+.logo{font-size:38px;font-weight:800;background:var(--grad);-webkit-background-clip:text;color:transparent}.err{color:#ff8a80;min-height:20px;font-size:14px}
+#app{display:none;height:100vh;grid-template-columns:84px clamp(300px,24vw,360px) minmax(0,1fr)}
+#rail{background:#050d08;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:8px;overflow:auto;border-right:1px solid #12291b}
+#groups{display:flex;flex-direction:column;gap:8px}
+.ico{width:54px;height:54px;border-radius:50%;background:var(--p2);display:flex;align-items:center;justify-content:center;font-weight:800;cursor:pointer;transition:.15s;color:var(--y);border:2px solid transparent}
+.ico:hover,.ico.on{border-radius:16px;background:var(--grad);color:#06210f}.ico.on{border-color:var(--b)}
+.add{background:transparent;border:2px dashed #2a5a3b;color:var(--g)}
+#panel{background:var(--p);display:flex;flex-direction:column;min-width:0;overflow:hidden;border-right:1px solid #12291b}
+.ph{padding:16px;border-bottom:3px solid;border-image:linear-gradient(90deg,var(--g),var(--y),var(--b)) 1;font-weight:700}
+.ph small{display:block;color:var(--mut);font-weight:400;cursor:pointer;margin-top:3px}.ph small:hover{color:var(--y)}
+.sec{padding:14px;flex:1}.sec h4{margin:0 0 8px;font-size:12px;letter-spacing:1px;color:var(--mut)}.sec button{width:100%;margin-bottom:8px;text-align:left}
+.me{display:flex;align-items:center;gap:10px;padding:0 10px 0 12px;height:var(--meh);flex:0 0 auto;min-width:0;background:#08170e;border-top:1px solid #12291b}.me #avw{display:flex;flex:0 0 auto}.me #me{flex:1 1 0;min-width:0;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.av{width:38px;height:38px;border-radius:50%;background:var(--b);color:var(--y);display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+#main{display:flex;flex-direction:column;height:100vh;min-width:0;min-height:0;overflow:hidden;position:relative;background:linear-gradient(180deg,#0a1a11,#07130c)}
+#tiles{display:flex;flex-wrap:wrap;gap:8px;padding:8px;background:#050d08;flex:0 0 auto;max-height:40vh;overflow-y:auto}#tiles:empty{display:none}
+#tiles video{height:clamp(110px,20vh,200px);max-width:100%;background:#000;border-radius:10px;border:2px solid var(--b)}
+#msgs{flex:1 1 0;min-height:120px;overflow:auto;padding:16px}.m{display:flex;gap:12px;margin-bottom:14px}.m small{color:var(--mut)}.m b{color:var(--y)}
+#bar{padding:0 16px 16px;flex:0 0 auto;position:relative;z-index:2}#bar input{background:var(--p2);padding:16px;border-radius:10px}
+#empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--mut);background:var(--bg)}
+#modal{display:none;padding:14px;background:#08170e;border-bottom:1px solid #12291b}#modal .row{display:flex;gap:6px;justify-content:flex-end;margin-top:6px}#modal .row button{padding:11px 18px;min-height:44px}
+#toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);background:var(--b);border:1px solid var(--y);padding:10px 18px;border-radius:10px;opacity:0;transition:.3s;z-index:10;pointer-events:none}
+#splash{display:none;position:fixed;inset:0;z-index:50;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,#0b5a2c,#07130c 70%);transition:transform .9s cubic-bezier(.7,0,.3,1)}
+#slw{display:flex;flex-direction:column;align-items:center;gap:22px;transition:opacity .5s,transform .5s}#slw.out{opacity:0;transform:scale(.7)}
+#sl{width:170px;animation:spin 1.8s cubic-bezier(.6,.1,.4,.9) infinite;filter:drop-shadow(0 0 28px #ffdf0055)}@keyframes spin{to{transform:rotate(360deg)}}
+#st{color:var(--mut);letter-spacing:2px;font-size:13px}
+#sw{position:absolute;font-size:40px;font-weight:300;letter-spacing:1px;opacity:0;text-align:center;padding:0 20px}#sw.show{animation:wel 3.2s ease forwards}
+@keyframes wel{0%{opacity:0;transform:translateY(12px)}30%{opacity:1;transform:none}70%{opacity:1}100%{opacity:0}}
+#panel{position:relative}#menu{display:none;position:absolute;bottom:calc(var(--meh) + 8px);left:8px;right:8px;max-height:calc(100% - var(--meh) - 24px);overflow:auto;background:#0c1d13;border:1px solid #1d3a28;border-top:3px solid var(--y);border-radius:10px;padding:12px;z-index:20}
+#menu select{width:100%;background:#06100a;color:var(--t);border:1px solid #1d3a28;border-radius:6px;padding:10px;margin:4px 0 12px}#menu label{font-size:13px;color:var(--mut)}#menu button{width:100%;margin-bottom:10px}
+.mb{margin-left:auto;display:flex;gap:4px;flex:0 0 auto}.mb button{background:transparent;padding:8px;min-width:42px;min-height:42px;display:inline-flex;align-items:center;justify-content:center;color:var(--t)}.mb button:not(.off):hover{background:#ffffff14;filter:none}.mb .off{background:#c0392b66}
+.vu{display:flex;align-items:center;gap:8px;padding:3px 10px 3px 28px;color:var(--mut);font-size:14px}.sp{animation:spin 1s cubic-bezier(.6,.1,.4,.9)}
+.tile{position:relative}.nm{position:absolute;left:8px;bottom:8px;background:#000a;padding:2px 8px;border-radius:6px;font-size:13px}
+#tiles .tile:fullscreen{background:#000}#tiles .tile:fullscreen video{height:100%;width:100%;object-fit:contain;border:0}
+#call{display:none;position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:40;align-items:center;gap:16px;background:#0c1d13;border:1px solid var(--y);border-top:4px solid var(--b);border-radius:14px;padding:14px 20px;box-shadow:0 10px 40px #000a;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 7px #ffdf0033}}.cr{display:flex;gap:8px}
+.ic{width:24px;height:24px;vertical-align:middle;margin-right:6px}.it .ic{width:28px;height:28px;margin:0}.fr .ic,.mb .ic{margin:0;width:26px;height:26px}.ico.add img{width:34px;margin:0}.mb .off img{filter:grayscale(1) opacity(.6)}
+.vw{position:absolute;right:8px;bottom:8px;display:flex;align-items:center;gap:6px;background:#000b;padding:4px 10px;border-radius:8px;opacity:0;transition:.2s}.tile:hover .vw,.vw:focus-within{opacity:1}
+.vol{width:110px!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;accent-color:var(--y);cursor:pointer}
+#upd{display:none;position:fixed;top:14px;right:14px;z-index:60;align-items:center;gap:10px;flex-wrap:wrap;background:#0c1d13;border:1px solid var(--y);border-top:4px solid var(--b);border-radius:12px;padding:12px 16px;box-shadow:0 10px 40px #000a;max-width:min(560px,92vw)}
+#upd button{padding:8px 14px;min-height:0}.pb{display:block;width:150px;height:6px;background:#1d3a28;border-radius:4px;overflow:hidden}.pb i{display:block;height:100%;background:var(--grad)}
+#dlg{display:none;position:fixed;inset:0;z-index:70;background:#000a;align-items:center;justify-content:center}
+.dc{width:min(580px,92vw);max-height:88vh;overflow:auto;background:#0c1d13;border:1px solid #1d3a28;border-top:4px solid var(--b);border-radius:14px;padding:22px}.dc h3{margin:0 0 14px;display:flex;align-items:center}
+.dc h4{margin:20px 0 8px;color:var(--mut);font-size:12px;letter-spacing:1px;display:flex;align-items:center}.dc>button{width:100%;margin-top:10px}
+.pr{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid #12291b}.pr>span{margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.pr select{width:auto;background:#06100a;color:var(--t);border:1px solid #1d3a28;border-radius:6px;padding:6px}.pr label{font-size:12px;color:var(--mut)}.pr button{min-height:0;padding:8px 12px}
+.ico img.gi{width:100%;height:100%;border-radius:inherit;object-fit:cover;margin:0}
+#auth{overflow:auto}.card .slg{justify-content:center;margin:2px 0 10px}
+.hero2{display:flex;align-items:center;gap:18px;padding:14px 20px;margin-bottom:14px;border-radius:14px;background:linear-gradient(135deg,#0b3a1f,#0c1d13 60%,#00277866);border:1px solid #1d3a28}
+.hero2 img{width:96px;flex-shrink:0;animation:bob 3s ease-in-out infinite}.hero2 b{font-size:20px;display:block;color:var(--y)}.hero2 span{display:block;margin-top:4px}.hero2 small{display:block;margin-top:6px;color:var(--mut);font-size:12px}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-3deg)}}
+.empty{text-align:center;padding:26px;color:var(--mut)}.empty img{height:150px;display:block;margin:0 auto 10px}
+.slg{display:flex;align-items:center;gap:10px;color:var(--y);font-style:italic}.slg img{width:54px;animation:bob 2.4s ease-in-out infinite}
+.brand{margin-top:14px;font-size:13px;color:var(--mut)}.brand small{display:block;font-size:11px;opacity:.8;margin-top:3px}
+#sw small{display:block;font-size:15px;margin-top:12px;color:var(--y);letter-spacing:3px;font-weight:400}
+.fth{position:absolute;left:0;top:0;opacity:0;offset-rotate:auto 45deg;pointer-events:none;filter:drop-shadow(0 0 12px #ffdf0088)}
+.fth.fly{animation:flap 3.4s ease-in-out forwards}@keyframes flap{0%{offset-distance:0%;opacity:0}8%{opacity:1}88%{opacity:1}100%{offset-distance:100%;opacity:0}}
+#toast{z-index:99}#upd,#call,#bell{z-index:85}#dlg{z-index:90}
+.avw{position:relative;display:inline-flex;flex-shrink:0}.dot{position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;border:2px solid #0c1d13;background:#6b7a70}
+.dot.online{background:#2ecc71}.dot.dnd{background:#e74c3c}.dot.offline{background:#6b7a70}
+#bell{position:fixed;right:20px;bottom:24px;display:none;align-items:center;gap:12px;background:#0c1d13;border:1px solid var(--y);border-top:4px solid var(--b);border-radius:14px;padding:10px 16px;cursor:pointer;max-width:360px;box-shadow:0 10px 40px #000a}
+#bell.show{display:flex;animation:pop .3s}@keyframes pop{from{transform:translateY(20px);opacity:0}}
+#bell img{width:48px;transform-origin:50% 12%;animation:ringb .5s ease-in-out 6}@keyframes ringb{0%,100%{transform:rotate(0)}25%{transform:rotate(20deg)}75%{transform:rotate(-20deg)}}
+#bell div{display:flex;flex-direction:column;min-width:0}#bell span{color:var(--mut);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:240px}
+#settings{display:none;position:fixed;inset:0;z-index:75;background:var(--bg);animation:fadein .2s}@keyframes fadein{from{opacity:0;transform:scale(.98)}}
+.sn{width:280px;background:var(--p);border-right:1px solid #12291b;padding:30px 14px;overflow:auto}.sn h4{margin:0 0 10px 6px;font-size:12px;letter-spacing:1px;color:var(--mut)}
+.sb{flex:1;position:relative;overflow:auto;padding:44px 60px;background:linear-gradient(180deg,#0a1a11,#07130c)}.sc{max-width:640px}.sc h2{margin:0 0 20px}.sx{position:absolute;right:30px;top:24px}
+.row2{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 0;border-top:1px solid #12291b}.row2 span{color:var(--mut);font-size:13px;display:block}
+.tg{position:relative;width:46px;height:26px;flex-shrink:0}.tg input{display:none}.tg i{position:absolute;inset:0;background:#2a3a30;border-radius:13px;cursor:pointer;transition:.2s}
+.tg i:before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;border-radius:50%;background:#fff;transition:.2s}.tg input:checked+i{background:var(--g)}.tg input:checked+i:before{transform:translateX(20px)}
+.so{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid #1d3a28;border-radius:12px;margin-bottom:10px;cursor:pointer}.so.on{border-color:var(--y);background:#12291b}.so .dot{position:static;width:16px;height:16px}.so span{display:block;color:var(--mut);font-size:13px}
+.sc select{background:#06100a;color:var(--t);border:1px solid #1d3a28;border-radius:8px;padding:10px;width:100%;margin:6px 0 16px}.sc input[type=range]{padding:0;border:0;accent-color:var(--y);background:transparent}
+@property --r{syntax:'<length>';inherits:false;initial-value:0px}
+#splash.iris{-webkit-mask-image:radial-gradient(circle at 50% 50%,transparent var(--r),#000 calc(var(--r) + 1px));mask-image:radial-gradient(circle at 50% 50%,transparent var(--r),#000 calc(var(--r) + 1px))}
+#ring{display:none;position:fixed;left:50%;top:50%;width:0;height:0;border-radius:50%;transform:translate(-50%,-50%);z-index:51;pointer-events:none;box-shadow:0 0 0 6px #009c3b,0 0 0 13px #ffdf00,0 0 0 20px #002776,0 0 50px 24px #ffdf0055}
+#flyer{display:none;position:fixed;left:0;top:0;width:180px;z-index:52;pointer-events:none;filter:drop-shadow(0 6px 18px #0009)}
+#scrim{display:none;position:fixed;inset:0;background:#000a;z-index:25}
+body.mobile{height:100dvh;--sat:var(--safe-area-inset-top,env(safe-area-inset-top,0px));--sab:var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px))}
+body.mobile #app{grid-template-columns:1fr;height:100dvh}
+body.mobile #rail,body.mobile #panel{position:fixed;top:0;bottom:0;z-index:30;transform:translateX(-110%);transition:transform .25s ease}
+body.mobile #rail{left:0;width:72px;padding-top:calc(var(--sat) + 10px)}body.mobile #panel{left:72px;width:min(280px,72vw);padding-top:var(--sat)}
+body.mobile.nav #rail,body.mobile.nav #panel{transform:none}body.mobile.nav #scrim{display:block}
+body.mobile #main{height:100dvh}body.mobile #top{flex-wrap:wrap;padding-top:calc(var(--sat) + 10px)}
+body.mobile #top .cb{margin-left:0;width:100%;overflow-x:auto;padding-bottom:4px}body.mobile #bar{padding-bottom:calc(var(--sab) + 12px)}body.mobile .me{padding-bottom:calc(var(--sab) + 10px)}
+body.mobile button{padding:10px 14px;font-size:15px}body.mobile input,body.mobile select{font-size:16px}
+body.mobile #settings{flex-direction:column}body.mobile .sn{width:auto;display:flex;overflow-x:auto;padding:calc(var(--sat) + 10px) 10px 10px;gap:6px;flex-shrink:0}
+body.mobile .sn h4{display:none}body.mobile .sn .it{white-space:nowrap}body.mobile .sb{padding:56px 18px 24px}body.mobile .sx{right:14px;top:calc(var(--sat) + 8px)}
+body.mobile #auth{padding-top:var(--sat)}body.mobile .hero2 img{width:64px}body.mobile #bell{right:10px;left:10px;bottom:calc(var(--sab) + 16px);max-width:none}
+body.mobile #call{width:calc(100vw - 24px);top:calc(var(--sat) + 10px)}body.mobile #upd{right:8px;left:8px;top:calc(var(--sat) + 8px);max-width:none}
+body.nodisplay .shr{display:none}@media (hover:none){.vw{opacity:1}}
+::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:#1d3a28;border-radius:4px}
+.ico.logo{background:transparent;border:0}.ico.logo img{width:52px}.ico.logo.on,.ico.logo:hover{background:#12291b;border-radius:16px}
+.sep{width:32px;height:2px;background:#1d3a28;border-radius:2px}.sec{overflow:auto}
+.it{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:8px;cursor:pointer;color:var(--mut);margin-bottom:2px}.it:hover,.it.on{background:var(--p2);color:var(--t)}
+.bd{background:#c0392b;border-radius:10px;padding:0 7px;font-size:12px;color:#fff}.pl{float:right;cursor:pointer;font-size:16px}.pl:hover{color:var(--y)}
+#top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 16px;min-height:64px;flex:0 0 auto;border-bottom:3px solid;border-image:linear-gradient(90deg,var(--g),var(--y),var(--b)) 1}
+#top .cb{margin-left:auto;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}#top button{padding:10px 16px;min-height:44px}
+#fr{flex:1;padding:16px;overflow:auto}.fr{display:flex;align-items:center;gap:12px;padding:10px;border-top:1px solid #12291b}.fr span{margin-left:auto;display:flex;gap:8px}.mut{color:var(--mut)}
+</style></head><body>
+<div id="auth"><div class="card"><img src="logo.png" style="width:120px"><div class="slg"><img src="assets/m_fly.png">Onde a amizade ganha asas.</div>
+<input id="user" placeholder="Nome de usuário (só no cadastro)"><input id="email" placeholder="E-mail">
+<input id="pass" type="password" placeholder="Senha" onkeydown="if(event.key==='Enter')doAuth('login')"><div class="err" id="err"></div>
+<button onclick="doAuth('login')" style="width:100%">Entrar</button><br><br><button class="g" onclick="doAuth('register')" style="width:100%">Criar conta</button><div class="brand">Conectando amizades, espalhando brasilidade!<small>Sua turma, sua voz, seu Brasil</small></div></div></div>
+<div id="app"><div id="rail"><div class="ico logo" id="home" title="Início" onclick="goHome();spinLogo()"><img src="logo.png"></div><div class="sep"></div><div id="groups"></div>
+<div class="ico add" title="Criar grupo" onclick="newGroup()"><img src="assets/createserver.png"></div><div class="ico add" title="Entrar com código" onclick="joinGroup()"><img src="assets/joinserver.png"></div></div>
+<div id="panel"><div class="ph" id="ph"></div>
+<div id="modal"><div class="fc"><b id="mt"></b><input id="mi" autocomplete="off" spellcheck="false"><div class="row"><button class="g" id="mcancel">Cancelar</button><button id="mok">OK</button></div></div></div>
+<div class="sec" id="psec"></div><div id="menu"></div><div class="me"><div id="avw"></div><b id="me"></b><span class="mb"><button id="bmic" title="Mutar microfone" onclick="toggleMic()"></button><button id="bdeaf" title="Ensurdecer" onclick="toggleDeaf()"></button><button id="bset" title="Configurações" aria-label="Configurações" onclick="openMenu()"></button></span></div></div>
+<div id="main"><div id="top"></div><div id="tiles"></div><div id="fr"></div><div id="msgs"></div>
+<div id="bar"><input id="msg" placeholder="Enviar mensagem..." onkeydown="if(event.key==='Enter')send()"></div></div></div>
+<div id="ring"></div><img id="flyer" src="assets/m_fly.png"><div id="scrim" onclick="toggleNav(false)"></div><div id="toast"></div><div id="bell"></div><div id="settings"></div><input type="file" id="gfile" accept="image/*" hidden onchange="setGroupAvatar(this)"><div id="dlg" onclick="if(event.target===this)closeDlg()"></div><div id="upd"></div><input type="file" id="file" accept="image/*" hidden onchange="setAvatar(this)">
+<div id="call"><div id="cav"></div><div id="ct"></div><div class="cr"><button id="cacc">Aceitar</button><button class="r" id="crej">Recusar</button></div></div>
+<div id="splash"><div id="slw"><img id="sl" src="logo.png"><div id="st">CARREGANDO...</div><div class="slg"><img src="assets/m_fly.png">Onde a amizade ganha asas.</div></div><div id="sw">Seja bem-vindo ao Lindesk<small>Sua turma, sua voz, seu Brasil</small></div><img class="fth" id="f1" src="assets/feather.png" style="width:80px"><img class="fth" id="f2" src="assets/feather.png" style="width:54px"><img class="fth" id="f3" src="assets/feather.png" style="width:38px"></div>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script>
+const SERVER_URL = 'https://lindesk-server.onrender.com';
+const ICE = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' },
+  { urls: ['turn:openrelay.metered.ca:80', 'turn:openrelay.metered.ca:443', 'turn:openrelay.metered.ca:443?transport=tcp'], username: 'openrelayproject', credential: 'openrelayproject' }] };
+let token, me, socket, groups = [], fr = { friends: [], incoming: [], outgoing: [] }, view = { t: 'home' }, chans = [], tab = 'all', chatId = null, local, peers = {};
+const $ = id => document.getElementById(id), wait = ms => new Promise(r => setTimeout(r, ms));
+const I = n => `<img class="ic" src="assets/${n}.png">`;
+const GEAR = '<svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#009c3b"/><stop offset="1" stop-color="#ffdf00"/></linearGradient></defs><path d="M20.0 9.0 L20.7 3.3 L27.3 3.3 L28.0 9.0 L31.8 10.6 L36.3 7.0 L41.0 11.7 L37.4 16.2 L39.0 20.0 L44.7 20.7 L44.7 27.3 L39.0 28.0 L37.4 31.8 L41.0 36.3 L36.3 41.0 L31.8 37.4 L28.0 39.0 L27.3 44.7 L20.7 44.7 L20.0 39.0 L16.3 37.4 L11.7 41.0 L7.0 36.3 L10.6 31.8 L9.0 28.0 L3.3 27.3 L3.3 20.7 L9.0 20.0 L10.6 16.2 L7.0 11.7 L11.7 7.0 L16.2 10.6 Z" fill="url(#gg)" stroke="#06210f" stroke-width="3" stroke-linejoin="round"/><circle cx="24" cy="24" r="7" fill="#002776" stroke="#06210f" stroke-width="3"/></svg>';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const hue = n => [...n].reduce((a, c) => a + c.charCodeAt(0), 0) * 37 % 360;
+const avatars = {};
+const av = (n, z = 38) => avatars[n] ? `<img class="av" style="width:${z}px;height:${z}px;object-fit:cover" src="${avatars[n]}">` : `<div class="av" style="width:${z}px;height:${z}px;background:hsl(${hue(n)},55%,38%)">${esc(n[0].toUpperCase())}</div>`;
+const reg = l => l.forEach(u => u.avatar && (avatars[u.username] = u.avatar));
+async function api(path, method = 'GET', body) {
+  const r = await fetch(SERVER_URL + path, { method, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token }, body: body && JSON.stringify(body) });
+  const j = await r.json(); if (!r.ok) throw new Error(j.error); return j;
+}
+async function doAuth(kind) {
+  try { const j = await api('/' + kind, 'POST', { username: $('user').value, email: $('email').value, password: $('pass').value }); token = j.token; me = j.user; me.status = me.status || 'online'; if (me.avatar) avatars[me.username] = me.avatar; saveSession(); start(); }
+  catch (e) { $('err').textContent = e.message; }
+}
+function start() {
+  $('auth').style.display = 'none'; $('app').style.display = 'grid'; $('me').textContent = me.username; updMe(); updBar();
+  socket = io(SERVER_URL, { auth: { token } });
+  socket.on('chat:msg', m => { if (m.cid == chatId) { addMsg(m); if (view.t === 'srv' && m.username !== me.username && !document.hasFocus() && prefs.groups) notify(view.g.name, `${m.username}: ${m.text}`); } });
+  socket.on('notify', n => {
+    const dm = () => { const f = fr.friends.find(x => x.username === n.username); if (f) openDM(f.id); };
+    if (n.kind === 'dm') { if (view.t === 'dm' && view.cid == n.cid && document.hasFocus()) return; notify(n.username, n.text, dm); }
+    else if (n.kind === 'friend') notify('Pedido de amizade', `${n.username} quer ser seu amigo`, () => { tab = 'pend'; goHome(); });
+    else if (n.kind === 'friendok') notify('Amizade aceita', `${n.username} agora é seu amigo`, goHome);
+  });
+  socket.on('voice:joined', () => { if (prefs.join) playSound('join'); });
+  socket.on('presence', p => {
+    if (p.id === me.id) { me.status = p.status; updMe(); return; }
+    [...fr.friends, ...fr.incoming, ...fr.outgoing].forEach(u => { if (u.id === p.id) u.status = p.status; });
+    sortFriends(); renderPanel(); if (view.t === 'home' && tab !== 'add') renderFriends();
+  });
+  socket.on('friends:update', loadFriends);
+  socket.on('call:ring', r => showCall(`${r.username} está te chamando...`, r.username, true));
+  socket.on('call:cancel', hideCall);
+  socket.on('voice:users', ({ cid, users }) => { reg(users); vusers[cid] = users; renderPanel(); });
+  socket.on('voice:peers', list => { list.forEach(p => { names[p.id] = p.username; if (!peers[p.id]) makePeer(p.id); }); if (list.length) hideCall(); });
+  socket.on('voice:signal', onSignal);
+  socket.on('group:left', gid => { if (view.t === 'srv' && view.g.id == gid) { if (callRoom && chans.some(c => c.id === callRoom)) leaveVoice(); goHome(); } loadGroups(); });
+  socket.on('group:deleted', gid => { if (view.t === 'srv' && view.g.id == gid) { closeDlg(); goHome(); } loadGroups(); });
+  socket.on('group:changed', () => refreshGroup());
+  socket.on('chat:denied', () => toast('Você não tem permissão para escrever neste canal'));
+  socket.on('connect', () => { if (callRoom && local) { Object.keys(peers).forEach(closePeer); socket.emit('voice:join', callRoom); toast('Reconectado à chamada'); } }); socket.on('voice:left', id => closePeer(id));
+  splash(Promise.all([loadGroups(), loadFriends()])); mobileInit();
+}
+async function loadGroups() { groups = await api('/groups'); render(); }
+async function loadFriends() { fr = await api('/friends'); sortFriends(); reg([...fr.friends, ...fr.incoming, ...fr.outgoing]); render(); }
+const render = () => { renderRail(); renderPanel(); renderMain(); };
+function renderRail() {
+  $('home').classList.toggle('on', view.t !== 'srv');
+  $('groups').innerHTML = groups.map(g => `<div class="ico ${view.t === 'srv' && view.g.id == g.id ? 'on' : ''}" title="${esc(g.name)}" onclick="openGroup(${g.id})">${g.avatar ? `<img class="gi" src="${g.avatar}">` : esc(g.name.slice(0, 2).toUpperCase())}</div>`).join('');
+}
+function renderPanel() {
+  const p = $('psec'), h = $('ph');
+  if (view.t !== 'srv') {
+    h.innerHTML = '<span>Lindesk</span>';
+    p.innerHTML = `<div class="it ${view.t === 'home' ? 'on' : ''}" onclick="goHome()">${I('friends')} Amigos ${fr.incoming.length ? `<span class="bd">${fr.incoming.length}</span>` : ''}</div><h4>MENSAGENS DIRETAS</h4>` +
+      fr.friends.map(f => `<div class="it ${view.f && view.f.id == f.id ? 'on' : ''}" onclick="openDM(${f.id})">${avs(f.username, 28, f.status)}${esc(f.username)}</div>`).join('');
+  } else {
+    h.innerHTML = `<span style="display:flex;align-items:center;gap:8px"><b style="flex:1">${esc(view.g.name)}</b>${isAdm(view.g) ? `<button class="g" style="padding:6px 8px;min-height:0" title="Configurações do grupo" onclick="openGroupSettings()">${I('settings')}</button>` : ''}${view.g.owner_id !== me.id ? `<button class="g" style="padding:6px 8px;min-height:0" title="Sair do grupo" onclick="leaveGroup()">${I('logout')}</button>` : ''}</span><small onclick="copyCode()">código: ${view.g.code} (clique p/ copiar)</small>`;
+    const row = c => `<div class="it ${view.ch && view.ch.id == c.id ? 'on' : ''}" onclick="openChannel(${c.id})">${c.type === 'voice' ? '🔊' : '#'} ${esc(c.name)}</div>` + (c.type === 'voice' ? (vusers[c.id] || []).map(u => `<div class="vu">${av(u.username, 22)}${esc(u.username)}</div>`).join('') : '');
+    p.innerHTML = ['text', 'voice'].map(t => `<h4>CANAIS DE ${t === 'text' ? 'TEXTO' : 'VOZ'} <b class="pl" title="Criar canal" onclick="newChannel('${t}')">+</b></h4>` + chans.filter(c => c.type === t).map(row).join('')).join('');
+  }
+}
+function renderMain() {
+  const calls = `<span class="cb"><button onclick="joinVoice(false)">${I('call')}Chamada</button><button onclick="joinVoice(true)">${I('camera')}Vídeo</button>` + (screen ? '<button class="r" onclick="stopShare()">⏹ Parar transmissão</button>' : `<button class="g shr" onclick="shareScreen()">${I('share')}Tela</button><button class="g shr" onclick="toggleShareAudio()">${shareAudio ? I('speaker') + 'Som: sim' : I('block') + 'Som: não'}</button>`) + '<button class="r" onclick="leaveVoice()">Sair</button></span>';
+  const chat = view.t === 'dm' || (view.t === 'srv' && view.ch && view.ch.type === 'text');
+  $('fr').style.display = view.t === 'home' ? 'block' : 'none'; $('msgs').style.display = $('bar').style.display = chat ? '' : 'none';
+  if (chat) setTimeout(() => $('msg').focus(), 30);
+  const ro = chat && view.t === 'srv' && view.ch.perm_write === 'admin' && !isAdm(view.g);
+  $('msg').disabled = !!ro; $('msg').placeholder = ro ? 'Somente admins podem escrever neste canal' : 'Enviar mensagem...';
+  const tb = (k, l) => `<button class="${tab === k ? '' : 'g'}" onclick="setTab('${k}')">${l}</button>`;
+  $('top').innerHTML = view.t === 'home' ? `<b>${I('friends')} Amigos</b>${tb('all', 'Todos')}${tb('pend', 'Pendente')}${tb('add', 'Adicionar amigo')}`
+    : view.t === 'dm' ? `<b>@ ${esc(view.f.username)}</b>${calls}`
+    : view.ch ? `<b>${view.ch.type === 'voice' ? '🔊' : '#'} ${esc(view.ch.name)}</b>${view.ch.type === 'voice' ? calls : ''}` : '';
+  if (document.body.classList.contains('mobile')) $('top').insertAdjacentHTML('afterbegin', '<button class="g" onclick="toggleNav()">☰</button>');
+  if (view.t === 'home') renderFriends();
+}
+function renderFriends() {
+  const row = (u, b) => `<div class="fr">${avs(u.username, 40, u.status)}<b>${esc(u.username)}</b><span>${b}</span></div>`;
+  let h;
+  if (tab === 'all') h = fr.friends.map(u => row(u, `<button class="g" onclick="openDM(${u.id})">${I('chat')}</button><button class="g" onclick="frAct('remove',${u.id})">${I('delete')}</button>`)).join('') || '<div class="empty"><img src="assets/m_sad.png">Você ainda não tem amigos por aqui.<br>Use a aba <b>Adicionar amigo</b> e traga sua turma!</div>';
+  else if (tab === 'pend') h = fr.incoming.map(u => row(u, `<button onclick="frAct('accept',${u.id})">✔</button><button class="g" onclick="frAct('remove',${u.id})">${I('delete')}</button>`)).join('') + fr.outgoing.map(u => row(u, '<small class="mut">enviado</small>')).join('') || '<div class="empty"><img src="assets/m_confused.png">Nenhum pedido pendente.</div>';
+  else h = '<p>Digite o nome de usuário do seu amigo:</p><div style="display:flex;gap:8px"><input id="fi" placeholder="Nome de usuário"><button onclick="addFriend()" style="white-space:nowrap">Enviar pedido</button></div>';
+  $('fr').innerHTML = `<div class="hero2"><img src="assets/m_fly.png"><div><b>Onde a amizade ganha asas.</b><span>Conectando amizades, espalhando brasilidade!</span><small>Sua turma, sua voz, seu Brasil</small></div></div>` + h;
+}
+const setTab = t => { tab = t; render(); };
+async function addFriend() { try { await api('/friends/request', 'POST', { username: $('fi').value }); $('fi').value = ''; toast('Pedido enviado!'); } catch (e) { toast(e.message); } }
+async function frAct(a, id) { try { await api('/friends/' + a, 'POST', { id }); } catch (e) { toast(e.message); } }
+function goHome() { view = { t: 'home' }; chatId = null; render(); }
+async function openDM(fid) {
+  try { const f = fr.friends.find(x => x.id == fid); const { id } = await api('/dm/' + fid); view = { t: 'dm', f, cid: id }; await openChat(id); } catch (e) { toast(e.message); }
+}
+async function openChat(cid) {
+  chatId = cid; $('msgs').innerHTML = ''; render(); socket.emit('chat:join', cid);
+  (await api(`/channels/${cid}/messages`)).forEach(addMsg);
+}
+async function openGroup(id) {
+  const g = groups.find(x => x.id == id); chans = await api(`/groups/${id}/channels`); view = { t: 'srv', g, ch: null }; socket.emit('voice:query', id);
+  const first = chans.find(c => c.type === 'text'); first ? openChannel(first.id) : render();
+}
+async function openChannel(id) {
+  const c = chans.find(x => x.id == id); view.ch = c;
+  if (c.type === 'text') await openChat(c.id); else { chatId = null; render(); joinVoice(false); }
+}
+async function newGroup() { const n = await ask('Criar grupo', 'Nome do grupo'); if (n) try { const g = await api('/groups', 'POST', { name: n }); await loadGroups(); openGroup(g.id); } catch (e) { toast(e.message); } }
+async function joinGroup() { const c = await ask('Entrar em um grupo', 'Código de convite'); if (c) try { const g = await api('/groups/join', 'POST', { code: c }); await loadGroups(); openGroup(g.id); } catch (e) { toast(e.message); } }
+async function newChannel(type) {
+  const n = await ask(type === 'text' ? 'Novo canal de texto' : 'Novo canal de voz', 'Nome do canal');
+  if (n) try { await api(`/groups/${view.g.id}/channels`, 'POST', { name: n, type }); chans = await api(`/groups/${view.g.id}/channels`); render(); } catch (e) { toast(e.message); }
+}
+function copyCode() { navigator.clipboard.writeText(view.g.code); toast('Código copiado!'); }
+function addMsg(m) {
+  if (m.avatar) avatars[m.username] = m.avatar; const d = document.createElement('div'); d.className = 'm'; const t = new Date(m.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  d.innerHTML = `${av(m.username)}<div><b>${esc(m.username)}</b> <small>${t}</small><div>${esc(m.text)}</div></div>`; $('msgs').append(d); $('msgs').scrollTop = 1e9;
+}
+function send() { if (chatId && $('msg').value) { socket.emit('chat:send', { cid: chatId, text: $('msg').value }); $('msg').value = ''; } }
+function ask(title, ph) { return new Promise(res => { $('mt').textContent = title; $('mi').placeholder = ph; $('mi').value = ''; $('modal').style.display = 'block'; setTimeout(() => $('mi').focus(), 50);
+  const done = v => { $('modal').style.display = 'none'; res(v); };
+  $('mok').onclick = () => done($('mi').value.trim()); $('mcancel').onclick = () => done(null); $('mi').onkeydown = e => { if (e.key === 'Enter') done($('mi').value.trim()); }; }); }
+function toast(t) { const d = $('toast'); d.textContent = t; d.style.opacity = 1; setTimeout(() => d.style.opacity = 0, 3500); }
+async function splash(work) {
+  const sp = $('splash'); sp.style.display = 'flex';
+  await Promise.all([work.catch(e => toast(e.message)), wait(2800)]);
+  $('slw').classList.add('out'); await wait(600);
+  $('sw').classList.add('show');
+  const W = innerWidth, H = innerHeight; // penas voando em curvas, como um voo de ave
+  [['f1', 0, 0], ['f2', -.07, .3], ['f3', .08, .6]].forEach(([id, dy, dl]) => { const f = $(id), y = k => Math.round(H * (k + dy));
+    f.style.offsetPath = `path('M -90 ${y(.85)} C ${W * .18} ${y(1.05)}, ${W * .22} ${y(.25)}, ${W * .45} ${y(.5)} S ${W * .72} ${y(.95)}, ${W * .85} ${y(.45)} S ${W * .98} ${y(.1)}, ${W + 90} ${y(.15)}')`;
+    f.style.animationDelay = dl + 's'; f.classList.add('fly'); });
+  await wait(3300);
+  // transição: um círculo se abre revelando o app, com anéis verde/amarelo/azul e o mascote cruzando a tela
+  const R = Math.hypot(W, H) / 2 + 40, ease = 'cubic-bezier(.65,0,.3,1)', D = 1300, rg = $('ring'), mf = $('flyer');
+  sp.style.transition = 'none'; sp.classList.add('iris'); rg.style.display = 'block'; mf.style.display = 'block';
+  sp.animate([{ '--r': '0px' }, { '--r': R + 'px' }], { duration: D, easing: ease, fill: 'forwards' });
+  rg.animate([{ width: '0px', height: '0px' }, { width: 2 * R + 'px', height: 2 * R + 'px' }], { duration: D, easing: ease, fill: 'forwards' });
+  $('app').animate([{ transform: 'scale(1.1)', filter: 'blur(8px)' }, { transform: 'none', filter: 'blur(0)' }], { duration: D + 150, easing: ease });
+  mf.animate([{ transform: `translate(-220px, ${H * .62}px) rotate(-10deg)` }, { transform: `translate(${W * .5 - 90}px, ${H * .3}px) rotate(6deg)`, offset: .5 }, { transform: `translate(${W + 220}px, ${H * .08}px) rotate(-8deg)` }], { duration: D + 300, easing: 'ease-in-out', fill: 'forwards' });
+  await wait(D + 350); sp.style.display = 'none'; rg.style.display = 'none'; mf.style.display = 'none';
+}
+// ---- Celular (Android via Capacitor) e sessão salva ----
+const CAP = (window.Capacitor && Capacitor.isNativePlatform && Capacitor.isNativePlatform()) ? Capacitor.Plugins : null;
+const setMob = () => document.body.classList.toggle('mobile', !!CAP || innerWidth <= 700);
+setMob(); addEventListener('resize', setMob);
+if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) document.body.classList.add('nodisplay');
+function toggleNav(v) { document.body.classList.toggle('nav', v === undefined ? !document.body.classList.contains('nav') : v); }
+$('panel').addEventListener('click', e => { if (e.target.closest('.it')) toggleNav(false); });
+const saveSession = () => { try { localStorage.setItem('lindeskSession', JSON.stringify({ token })); } catch (e) {} };
+function logout() { localStorage.removeItem('lindeskSession'); location.reload(); }
+if (!window.lindeskApp && CAP) window.lindeskApp = { mobile: true, osNotify: (t, b) => CAP.LocalNotifications.schedule({ notifications: [{ id: Math.floor(Math.random() * 2e9), title: t, body: b, smallIcon: 'ic_stat' }] }).catch(() => {}),
+  worklet: () => fetch('assets/rnnoise-worklet.js').then(r => r.text()), version: async () => { try { return (await CAP.App.getInfo()).version; } catch (e) { return 'celular'; } }, getStartup: async () => false, setStartup() {}, install() {}, onUpdate() {} };
+async function mobileInit() {
+  if (!CAP) return;
+  CAP.App.addListener('backButton', () => {
+    if ($('settings').style.display === 'flex') closeSettings();
+    else if ($('dlg').style.display === 'flex') closeDlg();
+    else if (document.body.classList.contains('nav')) toggleNav(false);
+    else if (view.t !== 'home') goHome();
+    else CAP.App.minimizeApp();
+  });
+  CAP.App.addListener('appStateChange', s => { if (s.isActive && socket && !socket.connected) socket.connect(); });
+  try { await CAP.LocalNotifications.requestPermissions(); } catch (e) {}
+  if (!prefs.bg) return;
+  try { // mantém o app vivo em segundo plano (serviço em primeiro plano, com notificação fixa)
+    const BM = CAP.BackgroundMode;
+    await BM.requestNotificationsPermission().catch(() => {}); await BM.requestMicrophonePermission().catch(() => {});
+    await BM.enable({ title: 'Lindesk', text: 'Conectado: você receberá mensagens e chamadas', icon: 'ic_stat', channelName: 'Lindesk em segundo plano', silent: true, resume: true, allowClose: false, disableWebViewOptimization: true, allowMicrophoneInBackground: true });
+    if (!prefs.askedBattery) { setPref('askedBattery', true); toast('Permita ignorar a otimização de bateria para o Lindesk continuar em segundo plano'); setTimeout(() => BM.requestDisableBatteryOptimizations().catch(() => {}), 1800); }
+  } catch (e) { console.warn('segundo plano', e); }
+}
+// ---- Grupos: configurações, permissões, apagar; conta ----
+const isAdm = g => g.owner_id === me.id || g.role === 'admin';
+const closeDlg = () => { $('dlg').style.display = 'none'; };
+const img128 = f => new Promise(res => { const img = new Image(); img.onload = () => { const c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d'), m = Math.min(img.width, img.height); x.drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, 0, 0, 128, 128); res(c.toDataURL('image/jpeg', 0.8)); }; img.src = URL.createObjectURL(f); });
+async function setGroupAvatar(inp) { const f = inp.files[0]; if (!f) return; inp.value = ''; try { await api(`/groups/${view.g.id}/avatar`, 'POST', { avatar: await img128(f) }); toast('Foto do grupo atualizada!'); } catch (e) { toast(e.message); } }
+async function refreshGroup() {
+  try {
+    await loadGroups(); if (view.t !== 'srv') return; const g = groups.find(x => x.id == view.g.id); if (!g) return goHome();
+    view.g = g; chans = await api(`/groups/${g.id}/channels`); view.ch = view.ch && chans.find(c => c.id == view.ch.id) || null; render();
+  } catch (e) {}
+}
+async function openGroupSettings() {
+  const g = view.g, own = g.owner_id === me.id;
+  try {
+    const [mem, ch] = await Promise.all([api(`/groups/${g.id}/members`), api(`/groups/${g.id}/channels`)]);
+    const sel = (id, f, v) => `<select onchange="setPerm(${id},'${f}',this.value)"><option value="all" ${v === 'all' ? 'selected' : ''}>Todos</option><option value="admin" ${v === 'admin' ? 'selected' : ''}>Só admins</option></select>`;
+    $('dlg').innerHTML = `<div class="dc"><h3>${I('settings')}${esc(g.name)}</h3><button class="g" onclick="$('gfile').click()">${I('palette')}Alterar foto do grupo</button>
+      <h4>${I('shield')}PERMISSÕES DOS CANAIS</h4>` + ch.map(c => `<div class="pr"><b>${c.type === 'voice' ? '🔊' : '#'} ${esc(c.name)}</b><span><label>${c.type === 'voice' ? 'Entrar' : 'Ver'}</label>${sel(c.id, 'perm_view', c.perm_view)}${c.type === 'text' ? `<label>Escrever</label>${sel(c.id, 'perm_write', c.perm_write)}` : ''}</span></div>`).join('') +
+      `<h4>${I('members')}MEMBROS</h4>` + mem.map(m => `<div class="pr">${av(m.username, 28)}<b>${esc(m.username)}</b><span>${m.id === g.owner_id ? '👑 Dono' : own ? `<button class="g" onclick="setRole(${m.id},'${m.role === 'admin' ? 'member' : 'admin'}')">${m.role === 'admin' ? 'Remover admin' : 'Tornar admin'}</button>` : m.role === 'admin' ? 'Admin' : ''}</span></div>`).join('') +
+      (own ? `<button class="r" id="delg" onclick="delGroup()">${I('delete')}Apagar grupo</button>` : '') + `<button class="g" onclick="closeDlg()">Fechar</button></div>`;
+    $('dlg').style.display = 'flex';
+  } catch (e) { toast(e.message); }
+}
+async function setPerm(id, field, value) { try { await api(`/channels/${id}/perms`, 'POST', { field, value }); } catch (e) { toast(e.message); } }
+async function setRole(uid, role) { try { await api(`/groups/${view.g.id}/members/${uid}/role`, 'POST', { role }); openGroupSettings(); } catch (e) { toast(e.message); } }
+function leaveGroup() {
+  $('dlg').innerHTML = `<div class="dc"><h3>${I('logout')}Sair do grupo</h3><p class="mut">Você vai sair de <b>${esc(view.g.name)}</b>. Para voltar, vai precisar de um novo código de convite.</p><button class="r" onclick="doLeave()">Sair do grupo</button><button class="g" onclick="closeDlg()">Cancelar</button></div>`; $('dlg').style.display = 'flex';
+}
+async function doLeave() { try { await api(`/groups/${view.g.id}/leave`, 'POST', {}); closeDlg(); } catch (e) { toast(e.message); } }
+let delArm = false;
+async function delGroup() {
+  const b = $('delg');
+  if (!delArm) { delArm = true; b.textContent = 'Clique de novo para APAGAR o grupo'; setTimeout(() => { delArm = false; if (b.isConnected) b.innerHTML = `${I('delete')}Apagar grupo`; }, 4000); return; }
+  delArm = false; try { await api(`/groups/${view.g.id}`, 'DELETE'); closeDlg(); } catch (e) { toast(e.message); }
+}
+function toggleNoise(b) { noiseOn = !noiseOn; b.innerHTML = `${I('mic')}Supressão de ruído: ${noiseOn ? 'ligada' : 'desligada'}`; if (local) swapMic(); }
+function openDelAccount() {
+  $('menu').style.display = 'none';
+  $('dlg').innerHTML = `<div class="dc"><h3>${I('delete')}Deletar conta</h3><p class="mut">Isso apaga sua conta, seus amigos, suas conversas e os grupos que você criou. Não dá para desfazer.</p><input id="dpw" type="password" placeholder="Digite sua senha para confirmar"><button class="r" onclick="delAccount()">Deletar minha conta</button><button class="g" onclick="closeDlg()">Cancelar</button></div>`;
+  $('dlg').style.display = 'flex'; setTimeout(() => $('dpw').focus(), 50);
+}
+async function delAccount() { try { await api('/me', 'DELETE', { password: $('dpw').value }); localStorage.removeItem('lindeskSession'); location.reload(); } catch (e) { toast(e.message); } }
+// ---- Presença, sons, notificações e página de configurações ----
+const avs = (n, z, s) => `<span class="avw">${av(n, z)}<i class="dot ${s || 'offline'}"></i></span>`;
+const sortFriends = () => { const rk = s => s === 'offline' ? 1 : 0; fr.friends.sort((a, b) => rk(a.status) - rk(b.status) || a.username.localeCompare(b.username)); };
+const prefs = Object.assign({ notif: true, sound: true, join: true, groups: false, bg: true, vol: 70 }, (() => { try { return JSON.parse(localStorage.getItem('lindeskPrefs')) || {}; } catch (e) { return {}; } })());
+const setPref = (k, v) => { prefs[k] = v; try { localStorage.setItem('lindeskPrefs', JSON.stringify(prefs)); } catch (e) {} };
+function playSound(k) {
+  const a = new Audio('assets/' + (k === 'join' ? 'join.mp3' : 'notif.mp3')); a.volume = Math.min(1, prefs.vol / 100);
+  if (spkId && a.setSinkId) a.setSinkId(spkId).catch(() => {}); a.play().catch(() => {});
+}
+let bellT;
+function notify(title, body, onClick) { // sino que balança no canto da tela
+  if (me.status === 'dnd' || !prefs.notif) return;
+  if (prefs.sound) playSound('notif');
+  const b = $('bell'); b.className = ''; void b.offsetWidth;
+  b.innerHTML = `<img src="assets/bell.png"><div><b>${esc(title)}</b><span>${esc(body)}</span></div>`; b.className = 'show';
+  b.onclick = () => { b.className = ''; if (onClick) onClick(); };
+  if (window.lindeskApp && (!document.hasFocus() || document.hidden)) lindeskApp.osNotify(title, body);
+  clearTimeout(bellT); bellT = setTimeout(() => { b.className = ''; }, 6000);
+}
+let sTab = 'account';
+const closeSettings = () => { $('settings').style.display = 'none'; };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSettings(); });
+function openMenu() { showSettings(sTab); }
+async function setStatus(v) { try { await api('/me/status', 'POST', { status: v }); me.status = v; updMe(); showSettings('status'); } catch (e) { toast(e.message); } }
+const setNoise = v => { noiseOn = v; if (local) swapMic(); };
+async function showSettings(t) {
+  sTab = t; const el = $('settings'); el.style.display = 'flex';
+  const tg = (k, l, d) => `<div class="row2"><div><b>${l}</b><span>${d}</span></div><label class="tg"><input type="checkbox" ${prefs[k] ? 'checked' : ''} onchange="setPref('${k}', this.checked)"><i></i></label></div>`;
+  let body = '';
+  if (t === 'account') {
+    const ver = window.lindeskApp ? await lindeskApp.version() : 'dev', st = window.lindeskApp ? await lindeskApp.getStartup() : false;
+    const stRow = window.lindeskApp && !lindeskApp.mobile ? `<div class="row2"><div><b>Iniciar com o Windows</b><span>Abre o Lindesk em segundo plano quando você liga o PC.</span></div><label class="tg"><input type="checkbox" ${st ? 'checked' : ''} onchange="lindeskApp.setStartup(this.checked)"><i></i></label></div>` : '';
+    body = `<h2>Minha conta</h2><div class="row2" style="border:0"><div style="display:flex;align-items:center;gap:16px">${avs(me.username, 80, me.status)}<div><b style="font-size:20px">${esc(me.username)}</b><span>Versão ${ver}</span></div></div><button class="g" onclick="$('file').click()">${I('palette')}Alterar foto</button></div>
+      <div class="row2"><div><b>Sair da conta</b><span>Você precisará entrar de novo neste aparelho.</span></div><button class="g" onclick="logout()">${I('logout')}Sair</button></div>${stRow}<div class="row2"><div><b>Deletar conta</b><span>Apaga sua conta, seus amigos e os grupos que você criou.</span></div><button class="r" onclick="openDelAccount()">${I('delete')}Deletar</button></div>`;
+  } else if (t === 'voice') {
+    try { (await navigator.mediaDevices.getUserMedia({ audio: true })).getTracks().forEach(x => x.stop()); } catch (e) {}
+    const d = await navigator.mediaDevices.enumerateDevices();
+    const opt = (k, cur) => d.filter(x => x.kind === k).map(x => `<option value="${x.deviceId}" ${x.deviceId === cur ? 'selected' : ''}>${esc(x.label || 'Padrão')}</option>`).join('');
+    body = `<h2>Voz e vídeo</h2><label>Microfone</label><select onchange="setMic(this.value)">${opt('audioinput', micId)}</select><label>Alto-falante</label><select onchange="setSpk(this.value)">${opt('audiooutput', spkId)}</select>
+      <div class="row2"><div><b>Supressão de ruído</b><span>Remove chiado e barulho de fundo do seu microfone.</span></div><label class="tg"><input type="checkbox" ${noiseOn ? 'checked' : ''} onchange="setNoise(this.checked)"><i></i></label></div>`;
+  } else if (t === 'notif') {
+    body = `<h2>Notificações</h2>` + tg('notif', 'Notificações na tela', 'Mostra o sino com mensagens, pedidos de amizade e avisos.') + tg('sound', 'Sons de notificação', 'Toca um som quando chega uma notificação ou chamada.') + tg('join', 'Som de entrada na chamada', 'Toca quando alguém entra na chamada.') + tg('groups', 'Mensagens de grupos', 'Avisa mensagens de grupos quando o app está em segundo plano.') + (CAP ? tg('bg', 'Funcionar em segundo plano', 'Mantém o Lindesk conectado com uma notificação fixa (reinicie o app para aplicar).') + `<div class="row2"><div><b>Bateria</b><span>Permita ignorar a otimização para o Android não fechar o app.</span></div><button class="g" onclick="CAP.BackgroundMode.requestDisableBatteryOptimizations()">Ajustar</button></div>` : '') +
+      `<div class="row2"><div><b>Volume dos sons</b></div><input type="range" min="0" max="100" value="${prefs.vol}" style="width:220px" oninput="setPref('vol', +this.value)"></div><div class="row2"><div><b>Testar</b></div><span style="display:flex;gap:8px"><button class="g" onclick="playSound('notif')">Notificação</button><button class="g" onclick="playSound('join')">Entrada na call</button></span></div>` + (me.status === 'dnd' ? '<p class="mut">Você está em Não perturbe: sons e avisos estão silenciados.</p>' : '');
+  } else {
+    const so = (v, n, d) => `<div class="so ${me.status === v ? 'on' : ''}" onclick="setStatus('${v}')"><i class="dot ${v}"></i><div><b>${n}</b><span>${d}</span></div></div>`;
+    body = `<h2>Status</h2>` + so('online', 'Disponível', 'Seus amigos veem que você está online.') + so('dnd', 'Não perturbe', 'Você continua online, mas sem sons nem notificações.') + so('offline', 'Offline', 'Você aparece como offline para todos, mas usa o app normalmente.');
+  }
+  const nav = [['account', 'Minha conta', 'friends'], ['voice', 'Voz e vídeo', 'mic'], ['notif', 'Notificações', 'bell'], ['status', 'Status', 'pin']];
+  el.innerHTML = `<div class="sn"><h4>CONFIGURAÇÕES</h4>${nav.map(([k, l, i]) => `<div class="it ${k === t ? 'on' : ''}" onclick="showSettings('${k}')">${I(i)}${l}</div>`).join('')}</div><div class="sb"><button class="g sx" onclick="closeSettings()">✕ ESC</button><div class="sc">${body}</div></div>`;
+}
+// ---- Atualização automática (avisos vindos do main.js) ----
+let updT;
+function cancelUpd() { clearInterval(updT); $('upd').style.display = 'none'; }
+if (window.lindeskApp) lindeskApp.onUpdate(d => {
+  const b = $('upd'); b.style.display = 'flex'; clearInterval(updT);
+  if (d.state === 'available') b.textContent = `⬇ Nova versão ${d.version} encontrada. Baixando...`;
+  else if (d.state === 'downloading') b.innerHTML = `⬇ Baixando atualização... ${d.percent}% <span class="pb"><i style="width:${d.percent}%"></i></span>`;
+  else if (d.state === 'ready') {
+    let n = 15;
+    const draw = () => { b.innerHTML = `<img class="ic" style="width:38px;height:auto" src="assets/m_cool.png"> Versão ${d.version} pronta! ${local ? 'Atualize quando sair da chamada.' : 'Reiniciando em ' + n + 's'} <button onclick="lindeskApp.install()">Reiniciar agora</button><button class="g" onclick="cancelUpd()">Depois</button>`; };
+    draw(); updT = setInterval(() => { if (local) return draw(); if (--n <= 0) lindeskApp.install(); else draw(); }, 1000);
+  }
+});
+// ---- Chamadas (WebRTC em malha) ----
+let rawStream = null, dn = null, callRoom = null, noiseOn = true, micOn = true, deaf = false, micId = '', spkId = '', screen = null, shareAudio = true, vusers = {}, callTimer, ringT;
+const names = {}, scrIds = {};
+const sig = (to, data) => socket.emit('voice:signal', { to, data });
+const lbl = (id, sid) => (names[id] || 'Alguém') + (scrIds[id] === sid ? ' • tela' : '');
+const roomId = () => view.t === 'dm' ? view.cid : view.ch && view.ch.type === 'voice' ? view.ch.id : null;
+function spinLogo() { const i = $('home').querySelector('img'); i.classList.remove('sp'); void i.offsetWidth; i.classList.add('sp'); }
+function updMe() { $('me').textContent = $('me').title = me.username; $('avw').innerHTML = avs(me.username, 38, me.status || 'online'); }
+function updBar() { $('bset').innerHTML = I('settings'); $('bmic').innerHTML = I(micOn ? 'mic' : 'micoff'); $('bdeaf').innerHTML = I('headphones'); $('bmic').classList.toggle('off', !micOn); $('bdeaf').classList.toggle('off', deaf); }
+function ring(on) {
+  clearInterval(ringT); if (!on || me.status === 'dnd' || !prefs.sound) return; const ac = ring.ac || (ring.ac = new AudioContext());
+  const beep = () => [0, .25].forEach((d, i) => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = i ? 523 : 659; g.gain.value = .15; o.connect(g); g.connect(ac.destination); o.start(ac.currentTime + d); o.stop(ac.currentTime + d + .2); });
+  beep(); ringT = setInterval(beep, 1800);
+}
+function showCall(txt, user, incoming) {
+  if (incoming && me.status !== 'dnd' && window.lindeskApp && !document.hasFocus()) lindeskApp.osNotify('Chamada recebida', txt);
+  $('ct').textContent = txt; $('cav').innerHTML = av(user, 64); $('cacc').style.display = incoming ? '' : 'none'; $('crej').textContent = incoming ? 'Recusar' : 'Cancelar';
+  $('call').style.display = 'flex'; ring(true);
+  $('cacc').onclick = async () => { hideCall(); const f = fr.friends.find(x => x.username === user); if (f) { await openDM(f.id); joinVoice(false); } };
+  $('crej').onclick = () => { hideCall(); if (!incoming) leaveVoice(); };
+  clearTimeout(callTimer); callTimer = setTimeout(() => { hideCall(); if (!incoming) leaveVoice(); }, 45000);
+}
+function hideCall() { $('call').style.display = 'none'; ring(false); clearTimeout(callTimer); }
+async function joinVoice(video) {
+  const room = roomId(); if (!room) return toast('Abra uma conversa com um amigo ou um canal de voz');
+  leaveVoice();
+  try { rawStream = await navigator.mediaDevices.getUserMedia({ audio: { deviceId: micId || undefined, echoCancellation: true, noiseSuppression: false }, video }); local = new MediaStream([await buildMic(), ...rawStream.getVideoTracks()]); }
+  catch (e) { return toast('Não consegui acessar o microfone/câmera'); }
+  local.getAudioTracks().forEach(t => t.enabled = micOn);
+  if (video) tile('local', local, true, 'Você');
+  callRoom = room; socket.emit('voice:join', room); if (prefs.join) playSound('join');
+  if (view.t === 'dm') showCall(`Chamando ${view.f.username}...`, view.f.username, false);
+}
+async function shareScreen() {
+  if (!local) return toast('Entre na chamada primeiro');
+  if (screen) return toast('Você já está transmitindo a tela');
+  let s;
+  try { s = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: shareAudio ? { restrictOwnAudio: true } : false }); } catch (e) { return toast('Transmissão cancelada'); }
+  screen = s; tile('screen', s, true, 'Sua tela');
+  Object.entries(peers).forEach(([id, p]) => { sig(id, { screen: s.id }); s.getTracks().forEach(t => p.addTrack(t, s)); });
+  s.getVideoTracks()[0].onended = stopShare; renderMain();
+}
+function stopShare() {
+  if (!screen) return; const s = screen, tr = s.getTracks(); screen = null; tr.forEach(t => t.stop()); $('t-screen')?.remove();
+  Object.entries(peers).forEach(([id, p]) => { sig(id, { screenOff: s.id }); p.getSenders().filter(x => x.track && tr.includes(x.track)).forEach(x => p.removeTrack(x)); });
+  renderMain();
+}
+function toggleShareAudio() { shareAudio = !shareAudio; renderMain(); }
+function toggleMic() { micOn = !micOn; if (local) local.getAudioTracks().forEach(t => t.enabled = micOn); updBar(); }
+function toggleDeaf() { deaf = !deaf; document.querySelectorAll('#tiles .tile').forEach(d => { if (d.id !== 't-local' && d.id !== 't-screen') d.querySelector('video').muted = deaf; }); updBar(); }
+async function openMenuOld() {
+  const m = $('menu'); if (m.style.display === 'block') { m.style.display = 'none'; return; }
+  try { (await navigator.mediaDevices.getUserMedia({ audio: true })).getTracks().forEach(t => t.stop()); } catch (e) {}
+  const d = await navigator.mediaDevices.enumerateDevices();
+  const opt = (k, cur) => d.filter(x => x.kind === k).map(x => `<option value="${x.deviceId}" ${x.deviceId === cur ? 'selected' : ''}>${esc(x.label || 'Padrão')}</option>`).join('');
+  m.innerHTML = `<button class="g" onclick="$('file').click()">🖼 Alterar foto de perfil</button><label>Microfone</label><select onchange="setMic(this.value)">${opt('audioinput', micId)}</select><label>Alto-falante</label><select onchange="setSpk(this.value)">${opt('audiooutput', spkId)}</select><button class="g" onclick="toggleNoise(this)">${I('mic')}Supressão de ruído: ${noiseOn ? 'ligada' : 'desligada'}</button><button class="r" onclick="openDelAccount()">${I('delete')}Deletar conta</button>`;
+  m.style.display = 'block';
+}
+async function setMic(id) {
+  micId = id; if (!local) return;
+  const s = await navigator.mediaDevices.getUserMedia({ audio: { deviceId: id, echoCancellation: true, noiseSuppression: false } });
+  const oldRaw = rawStream.getAudioTracks()[0]; rawStream.removeTrack(oldRaw); oldRaw.stop(); rawStream.addTrack(s.getAudioTracks()[0]);
+  await swapMic();
+}
+// Supressão de ruído por IA (RNNoise): o microfone passa por um filtro antes de ir para a call
+async function buildMic() {
+  if (dn) { dn.ctx.close().catch(() => {}); dn = null; }
+  const raw = rawStream.getAudioTracks()[0];
+  if (!noiseOn || !window.lindeskApp) return raw;
+  try {
+    const ctx = new AudioContext({ sampleRate: 48000 });
+    const url = URL.createObjectURL(new Blob([await lindeskApp.worklet()], { type: 'text/javascript' }));
+    await ctx.audioWorklet.addModule(url); URL.revokeObjectURL(url);
+    const node = new AudioWorkletNode(ctx, 'NoiseSuppressorWorklet'), dest = ctx.createMediaStreamDestination();
+    ctx.createMediaStreamSource(new MediaStream([raw])).connect(node).connect(dest);
+    dn = { ctx }; return dest.stream.getAudioTracks()[0];
+  } catch (e) {
+    console.warn('rnnoise', e); toast('Supressão avançada indisponível; usando a padrão');
+    raw.applyConstraints({ noiseSuppression: true, echoCancellation: true }).catch(() => {}); return raw;
+  }
+}
+async function swapMic() {
+  const old = local.getAudioTracks()[0], nt = await buildMic(); if (old === nt) return; nt.enabled = micOn;
+  Object.values(peers).forEach(p => p.getSenders().filter(x => x.track === old).forEach(x => x.replaceTrack(nt)));
+  local.removeTrack(old); local.addTrack(nt); if (old !== rawStream.getAudioTracks()[0]) old.stop();
+}
+function setSpk(id) { spkId = id; document.querySelectorAll('#tiles video').forEach(v => v.setSinkId && v.setSinkId(id).catch(() => {})); }
+function setAvatar(inp) {
+  const f = inp.files[0]; if (!f) return; const img = new Image();
+  img.onload = async () => {
+    const c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d'), m = Math.min(img.width, img.height);
+    x.drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, 0, 0, 128, 128); const a = c.toDataURL('image/jpeg', 0.8);
+    try { await api('/me/avatar', 'POST', { avatar: a }); avatars[me.username] = a; updMe(); render(); toast('Foto atualizada!'); } catch (e) { toast(e.message); }
+  };
+  img.src = URL.createObjectURL(f); inp.value = '';
+}
+function makePeer(id) {
+  const pc = new RTCPeerConnection(ICE); peers[id] = pc;
+  pc.sid = Math.random().toString(36).slice(2); pc.rsid = null; // identifica esta sessão de conexão (evita misturar mensagens antigas)
+  pc.polite = socket.id > id; pc.making = false; pc.ignore = false; // "negociação perfeita": evita as duas pontas ofertarem ao mesmo tempo
+  local.getTracks().forEach(t => pc.addTrack(t, local));
+  if (screen) { sig(id, { screen: screen.id }); screen.getTracks().forEach(t => pc.addTrack(t, screen)); }
+  pc.onicecandidate = e => e.candidate && sig(id, { candidate: e.candidate, sid: pc.sid, rsid: pc.rsid });
+  pc.ontrack = e => { const st = e.streams[0], k = id + st.id; tile(k, st, deaf, lbl(id, st.id)); st.onremovetrack = () => $('t-' + k)?.remove(); };
+  pc.onnegotiationneeded = async () => {
+    try { pc.making = true; await pc.setLocalDescription(); sig(id, { desc: pc.localDescription, sid: pc.sid, rsid: pc.rsid }); } catch (e) { console.warn('oferta', e); } finally { pc.making = false; }
+  };
+  pc.oniceconnectionstatechange = () => { if (pc.iceConnectionState === 'failed') pc.restartIce(); };
+  return pc;
+}
+async function onSignal({ from, username, data }) {
+  names[from] = username;
+  if (data.screen) { scrIds[from] = data.screen; const n = $('t-' + from + data.screen); if (n) n.querySelector('.nm').textContent = lbl(from, data.screen); return; }
+  if (data.screenOff) { $('t-' + from + data.screenOff)?.remove(); delete scrIds[from]; return; }
+  if (!local) return; hideCall();
+  let pc = peers[from];
+  if (pc && data.sid && data.desc && data.desc.type === 'offer' && pc.rsid && pc.rsid !== data.sid) { closePeer(from); names[from] = username; pc = null; } // o outro lado reiniciou a conexão
+  if (!pc) { if (!data.desc || data.desc.type !== 'offer') return; pc = makePeer(from); } // só cria conexão quando chega uma oferta
+  if (data.sid) { if (!pc.rsid) pc.rsid = data.sid; if (pc.rsid !== data.sid || (data.rsid && data.rsid !== pc.sid)) return; } // descarta mensagens de sessões antigas
+  const handle = async () => {
+    try {
+      if (data.desc) {
+        const collision = data.desc.type === 'offer' && (pc.making || pc.signalingState !== 'stable');
+        if (data.desc.type === 'answer' && pc.signalingState !== 'have-local-offer') return; // resposta atrasada/duplicada
+        pc.ignore = !pc.polite && collision; if (pc.ignore) return;
+        await pc.setRemoteDescription(data.desc);
+        for (const c of pc.pending || []) await pc.addIceCandidate(c).catch(() => {}); pc.pending = []; // aplica os candidatos que chegaram cedo
+        if (data.desc.type === 'offer') { await pc.setLocalDescription(); sig(from, { desc: pc.localDescription, sid: pc.sid, rsid: pc.rsid }); }
+      } else if (data.candidate) {
+        if (pc.ignore) return;
+        if (!pc.remoteDescription) (pc.pending = pc.pending || []).push(data.candidate); // guarda até a oferta/resposta ser aplicada
+        else await pc.addIceCandidate(data.candidate);
+      }
+    } catch (e) { console.warn('sinalização', e); }
+  };
+  pc.chain = (pc.chain || Promise.resolve()).then(handle); // processa uma mensagem por vez, na ordem
+}
+function tile(key, stream, mute, label) {
+  if ($('t-' + key)) return; const d = document.createElement('div'); d.className = 'tile'; d.id = 't-' + key;
+  const v = document.createElement('video'); v.srcObject = stream; v.autoplay = true; v.muted = mute; if (spkId && v.setSinkId) v.setSinkId(spkId).catch(() => {});
+  d.ondblclick = () => document.fullscreenElement ? document.exitFullscreen() : d.requestFullscreen();
+  d.append(v); d.insertAdjacentHTML('beforeend', `<span class="nm">${esc(label)}</span>`);
+  if (key !== 'local' && key !== 'screen') { // controle de volume de cada transmissão/pessoa
+    d.insertAdjacentHTML('beforeend', '<span class="vw" title="Volume">🔊<input type="range" class="vol" min="0" max="1" step="0.05" value="1"></span>');
+    const r = d.querySelector('.vol'); r.oninput = () => { v.volume = +r.value; }; r.ondblclick = e => e.stopPropagation();
+  }
+  $('tiles').append(d);
+}
+function closePeer(id) { peers[id]?.close(); delete peers[id]; delete names[id]; delete scrIds[id]; [...$('tiles').children].forEach(v => v.id.startsWith('t-' + id) && v.remove()); }
+function leaveVoice() {
+  stopShare(); Object.keys(peers).forEach(closePeer); local?.getTracks().forEach(t => t.stop()); rawStream?.getTracks().forEach(t => t.stop()); rawStream = null; if (dn) { dn.ctx.close().catch(() => {}); dn = null; } local = null; callRoom = null; $('tiles').innerHTML = ''; socket?.emit('voice:leave'); hideCall();
+}
+(async function restoreSession() {
+  let s = null; try { s = JSON.parse(localStorage.getItem('lindeskSession')); } catch (e) {}
+  if (!s || !s.token) return;
+  $('auth').style.visibility = 'hidden'; token = s.token;
+  try { me = await api('/me'); me.status = me.status || 'online'; if (me.avatar) avatars[me.username] = me.avatar; start(); }
+  catch (e) { if (!/conexão|fetch|Failed|Network/i.test(e.message)) localStorage.removeItem('lindeskSession'); else $('err').textContent = 'Sem conexão com o servidor. Tente de novo.'; token = null; $('auth').style.visibility = ''; }
+})();
+</script></body></html>

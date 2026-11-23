@@ -86,9 +86,9 @@ button:hover{filter:brightness(1.08)}button:focus-visible{outline:2px solid var(
 #scrim{display:none;position:fixed;inset:0;background:#000a;z-index:25}
 body.mobile{height:100dvh;--sat:var(--safe-area-inset-top,env(safe-area-inset-top,0px));--sab:var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px))}
 body.mobile #app{grid-template-columns:1fr;height:100dvh}
-body.mobile #rail,body.mobile #panel{position:fixed;top:0;bottom:0;z-index:30;transform:translateX(-110%);transition:transform .25s ease}
+body.mobile #rail,body.mobile #panel{position:fixed;top:0;bottom:0;z-index:30;transform:translateX(-110%);visibility:hidden;transition:transform .25s ease,visibility 0s .25s}
 body.mobile #rail{left:0;width:72px;padding-top:calc(var(--sat) + 10px)}body.mobile #panel{left:72px;width:min(280px,72vw);padding-top:var(--sat)}
-body.mobile.nav #rail,body.mobile.nav #panel{transform:none}body.mobile.nav #scrim{display:block}
+body.mobile #panel{transform:translateX(calc(-100% - 90px))}body.mobile.nav #rail,body.mobile.nav #panel{transform:none;visibility:visible;transition:transform .25s ease,visibility 0s}body.mobile.nav #scrim{display:block}
 body.mobile #main{height:100dvh}body.mobile #top{flex-wrap:wrap;padding-top:calc(var(--sat) + 10px)}
 body.mobile #top .cb{margin-left:0;width:100%;overflow-x:auto;padding-bottom:4px}body.mobile #bar{padding-bottom:calc(var(--sab) + 12px)}body.mobile .me{padding-bottom:calc(var(--sab) + 10px)}
 body.mobile button{padding:10px 14px;font-size:15px}body.mobile input,body.mobile select{font-size:16px}
@@ -104,7 +104,7 @@ body.nodisplay .shr{display:none}@media (hover:none){.vw{opacity:1}}
 .bd{background:#c0392b;border-radius:10px;padding:0 7px;font-size:12px;color:#fff}.pl{float:right;cursor:pointer;font-size:16px}.pl:hover{color:var(--y)}
 #top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 16px;min-height:64px;flex:0 0 auto;border-bottom:3px solid;border-image:linear-gradient(90deg,var(--g),var(--y),var(--b)) 1}
 #top .cb{margin-left:auto;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}#top button{padding:10px 16px;min-height:44px}
-#fr{flex:1;padding:16px;overflow:auto}.fr{display:flex;align-items:center;gap:12px;padding:10px;border-top:1px solid #12291b}.fr span{margin-left:auto;display:flex;gap:8px}.mut{color:var(--mut)}
+#fr{flex:1;padding:16px;overflow:auto}.fr{display:flex;align-items:center;gap:12px;padding:10px;border-top:1px solid #12291b}.fr>span:last-child{margin-left:auto;display:flex;gap:8px}.mut{color:var(--mut)}
 </style></head><body>
 <div id="auth"><div class="card"><img src="logo.png" style="width:120px"><div class="slg"><img src="assets/m_fly.png">Onde a amizade ganha asas.</div>
 <input id="user" placeholder="Nome de usuário (só no cadastro)"><input id="email" placeholder="E-mail">

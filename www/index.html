@@ -97,6 +97,44 @@ body.mobile .sn h4{display:none}body.mobile .sn .it{white-space:nowrap}body.mobi
 body.mobile #auth{padding-top:var(--sat)}body.mobile .hero2 img{width:64px}body.mobile #bell{right:10px;left:10px;bottom:calc(var(--sab) + 16px);max-width:none}
 body.mobile #call{width:calc(100vw - 24px);top:calc(var(--sat) + 10px)}body.mobile #upd{right:8px;left:8px;top:calc(var(--sat) + 8px);max-width:none}
 body.nodisplay .shr{display:none}@media (hover:none){.vw{opacity:1}}
+#auth{padding:18px;overflow:auto;align-items:flex-start;position:relative;background:radial-gradient(circle at 12% 10%,#ffdf0044,transparent 40%),radial-gradient(circle at 90% 92%,#00277899,transparent 48%),linear-gradient(135deg,#00663a,#07130c 72%)}
+#auth:before{content:"";position:fixed;inset:0;background:radial-gradient(#ffffff16 1.5px,transparent 1.5px) 0 0/26px 26px;pointer-events:none}
+.ac{position:relative;margin:auto;width:min(960px,96vw);display:flex;border-radius:30px;overflow:hidden;background:#0c1d13;border:1px solid #2a5a3b;box-shadow:0 30px 90px #000b,0 0 0 7px #ffffff0a;animation:rise .7s cubic-bezier(.2,.8,.2,1)}
+.ac:before{content:"";position:absolute;left:0;right:0;top:0;height:6px;z-index:6;background:linear-gradient(90deg,#009c3b 0 34%,#ffdf00 34% 67%,#002776 67%)}
+@keyframes rise{from{opacity:0;transform:translateY(26px) scale(.96)}}
+.aside{position:relative;overflow:hidden;flex:0 0 46%;display:flex;flex-direction:column;align-items:center;gap:6px;padding:34px 20px 20px;text-align:center;background:linear-gradient(180deg,#2f8bff 0%,#62d2ff 36%,#c4f2a4 70%,#2fb351 100%)}
+.aside>*{position:relative;z-index:2}.aside>.sky{position:absolute;z-index:0;inset:0;overflow:hidden;pointer-events:none}
+.sun{position:absolute;top:-50px;left:-50px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,#fffbc2,#ffdf00 52%,#ffdf0000 72%);animation:pulse2 4s ease-in-out infinite}@keyframes pulse2{50%{transform:scale(1.12)}}
+.cloud{position:absolute;height:26px;border-radius:30px;background:#fff;opacity:.9}.cloud:before,.cloud:after{content:"";position:absolute;background:#fff;border-radius:50%}
+.cloud:before{width:34px;height:34px;left:14px;top:-16px}.cloud:after{width:26px;height:26px;left:46px;top:-10px}
+.c1{width:96px;top:84px;animation:cl 26s linear infinite}.c2{width:72px;top:160px;animation:cl 34s linear infinite -12s}.c3{width:62px;top:40px;animation:cl 30s linear infinite -21s}@keyframes cl{from{left:-30%}to{left:112%}}
+.fl{position:absolute;top:-70px;opacity:.9;animation:drift 13s linear infinite}
+@keyframes drift{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(28px,170px) rotate(30deg)}50%{transform:translate(-20px,340px) rotate(-25deg)}75%{transform:translate(24px,520px) rotate(25deg)}100%{transform:translate(0,720px) rotate(-10deg)}}
+.alogo{width:150px;filter:drop-shadow(0 4px 8px #0004)}
+.hl{font-size:22px;font-weight:800;color:#fff;font-style:italic;text-shadow:0 2px 0 #00277888,0 4px 14px #0006}
+.bub{position:relative;background:#fff;color:#0b3a1f;font-weight:700;font-size:14px;padding:10px 16px;border-radius:18px;max-width:250px;min-height:20px;margin-top:6px;box-shadow:0 6px 16px #0003;transition:opacity .35s,transform .35s}
+.bub:after{content:"";position:absolute;left:50%;bottom:-9px;margin-left:-9px;border:9px solid transparent;border-bottom:0;border-top-color:#fff}.bub.out{opacity:0;transform:translateY(6px)}
+.stage{margin-top:8px}.amascot{display:block;width:210px;margin:0 auto;position:relative;z-index:2;animation:bob 3s ease-in-out infinite;filter:drop-shadow(0 10px 14px #0005)}
+.amascot.pop{animation:popin .5s,bob 3s ease-in-out .5s infinite}@keyframes popin{from{transform:scale(.6) rotate(-10deg);opacity:0}}
+.branch{display:block;width:240px;height:16px;border-radius:10px;background:linear-gradient(#a56a2e,#6b4220);margin:-20px auto 0;position:relative;z-index:1;box-shadow:0 4px 0 #0003}
+.branch:before,.branch:after{content:"";position:absolute;top:-10px;width:22px;height:22px;border-radius:0 100% 0 100%;background:#1fa34a}.branch:before{left:-4px}.branch:after{right:-4px;transform:scaleX(-1);background:#139a3f}
+.abrand{margin-top:auto;padding-top:10px;font-weight:800;font-size:14px;color:#fff;text-shadow:0 1px 8px #0009}.abrand small{display:block;margin-top:5px;font-size:11px;font-weight:600;opacity:.95;letter-spacing:.5px}
+.aform{flex:1;padding:40px 38px 22px;display:flex;flex-direction:column;justify-content:center;overflow:hidden}.panes{display:grid;width:100%}
+.pane{grid-area:1/1;transition:transform .5s cubic-bezier(.65,0,.3,1),opacity .35s}
+.pane h2{margin:0 0 4px;font-size:29px}.pane p{margin:0 0 16px;color:var(--mut)}.pane label{font-size:12px;letter-spacing:.5px;color:var(--mut);font-weight:700}
+.pane input{border-radius:14px;padding:13px 15px;background:#08170e;border:2px solid #1d3a28;transition:.2s}.pane input:focus{border-color:var(--y);box-shadow:0 0 0 4px #ffdf0022}
+#pLogin{transition:transform .5s cubic-bezier(.65,0,.3,1),opacity .35s,visibility 0s}
+#pReg{transform:translateX(70px);opacity:0;pointer-events:none;visibility:hidden;transition:transform .5s cubic-bezier(.65,0,.3,1),opacity .35s,visibility 0s .5s}
+.aform.reg #pLogin{transform:translateX(-70px);opacity:0;pointer-events:none;visibility:hidden;transition:transform .5s cubic-bezier(.65,0,.3,1),opacity .35s,visibility 0s .5s}
+.aform.reg #pReg{transform:none;opacity:1;pointer-events:auto;visibility:visible;transition:transform .5s cubic-bezier(.65,0,.3,1),opacity .35s,visibility 0s}
+.big{width:100%;margin-top:8px;border-radius:16px;padding:14px;font-size:17px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 0 #0b3a1f}.big img{width:28px}.big:hover img{animation:wig .5s}@keyframes wig{25%{transform:rotate(-20deg)}75%{transform:rotate(20deg)}}
+.big:active{transform:translateY(4px);box-shadow:0 2px 0 #0b3a1f}
+.alt{margin-top:18px;display:flex;align-items:center;gap:10px;color:var(--mut);font-size:14px;flex-wrap:wrap}.alt button{border-radius:20px}.err.ok{color:var(--mut)}
+.foot{margin-top:18px;text-align:center;font-size:12px;color:var(--mut);display:flex;align-items:center;justify-content:center;gap:6px}.foot i{width:9px;height:9px;border-radius:50%}.foot i:nth-child(1){background:#009c3b}.foot i:nth-child(2){background:#ffdf00}.foot i:nth-child(3){background:#2b6dff}
+@media (max-width:760px){.ac{flex-direction:column}.aside{flex:none;padding:22px 16px 14px}.aside .hl,.aside .bub,.aside .abrand,.aside .branch{display:none}.aside .alogo{width:80px}.amascot{width:110px}.aform{padding:24px 20px 16px}}
+body.mobile .ac{flex-direction:column}body.mobile .aside{flex:none;padding:calc(var(--sat,0px) + 18px) 16px 12px}body.mobile .aside .hl,body.mobile .aside .bub,body.mobile .aside .abrand,body.mobile .aside .branch{display:none}body.mobile .aside .alogo{width:80px}body.mobile .amascot{width:110px}body.mobile .aform{padding:22px 20px 14px}
+#boot{display:none;position:fixed;inset:0;z-index:95;align-items:center;justify-content:center;flex-direction:column;gap:18px;background:radial-gradient(circle at 50% 40%,#0b5a2c,#07130c 70%);color:var(--mut);letter-spacing:2px;font-size:13px}
+#boot img{width:150px;animation:spin 1.8s cubic-bezier(.6,.1,.4,.9) infinite}
 ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:#1d3a28;border-radius:4px}
 .ico.logo{background:transparent;border:0}.ico.logo img{width:52px}.ico.logo.on,.ico.logo:hover{background:#12291b;border-radius:16px}
 .sep{width:32px;height:2px;background:#1d3a28;border-radius:2px}.sec{overflow:auto}
@@ -106,10 +144,26 @@ body.nodisplay .shr{display:none}@media (hover:none){.vw{opacity:1}}
 #top .cb{margin-left:auto;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}#top button{padding:10px 16px;min-height:44px}
 #fr{flex:1;padding:16px;overflow:auto}.fr{display:flex;align-items:center;gap:12px;padding:10px;border-top:1px solid #12291b}.fr>span:last-child{margin-left:auto;display:flex;gap:8px}.mut{color:var(--mut)}
 </style></head><body>
-<div id="auth"><div class="card"><img src="logo.png" style="width:120px"><div class="slg"><img src="assets/m_fly.png">Onde a amizade ganha asas.</div>
-<input id="user" placeholder="Nome de usuário (só no cadastro)"><input id="email" placeholder="E-mail">
-<input id="pass" type="password" placeholder="Senha" onkeydown="if(event.key==='Enter')doAuth('login')"><div class="err" id="err"></div>
-<button onclick="doAuth('login')" style="width:100%">Entrar</button><br><br><button class="g" onclick="doAuth('register')" style="width:100%">Criar conta</button><div class="brand">Conectando amizades, espalhando brasilidade!<small>Sua turma, sua voz, seu Brasil</small></div></div></div>
+<div id="auth"><div class="ac">
+  <div class="aside"><div class="sky"><i class="sun"></i><i class="cloud c1"></i><i class="cloud c2"></i><i class="cloud c3"></i>
+      <img class="fl" style="left:10%;width:30px;animation-delay:-2s" src="assets/feather.png"><img class="fl" style="left:30%;width:22px;animation-delay:-7s" src="assets/feather.png"><img class="fl" style="left:55%;width:34px;animation-delay:-4s" src="assets/feather.png"><img class="fl" style="left:75%;width:24px;animation-delay:-10s" src="assets/feather.png"><img class="fl" style="left:90%;width:28px;animation-delay:-1s" src="assets/feather.png"></div>
+    <img class="alogo" src="logo.png"><div class="hl">Onde a amizade ganha asas.</div><div class="bub" id="bub">Bora bater um papo? A arara já chegou!</div>
+    <div class="stage"><img class="amascot" id="amascot" src="assets/m_neutral.png"><i class="branch"></i></div>
+    <div class="abrand">Conectando amizades, espalhando brasilidade!<small>Sua turma, sua voz, seu Brasil</small></div></div>
+  <div class="aform" id="aform"><div class="panes">
+    <div class="pane" id="pLogin"><h2>Oi, de novo!</h2><p>A turma está te esperando.</p>
+      <label>E-MAIL</label><input id="email" placeholder="seu@email.com" autocomplete="username">
+      <label>SENHA</label><input id="pass" type="password" placeholder="Sua senha secreta" autocomplete="current-password" onkeydown="if(event.key==='Enter')doAuth('login')">
+      <div class="err" id="err"></div><button class="big" onclick="doAuth('login')" onmouseenter="mood('fly')" onmouseleave="mood('neutral')"><img src="assets/feather.png">Entrar e voar</button>
+      <div class="alt">Primeira vez por aqui? <button class="g" onclick="authMode('register')">Criar conta</button></div></div>
+    <div class="pane" id="pReg"><h2>Vem pro bando!</h2><p>Crie sua conta e voe com a gente. É de graça!</p>
+      <label>NOME DE USUÁRIO</label><input id="user" placeholder="Como seus amigos vão te achar" autocomplete="off">
+      <label>E-MAIL</label><input id="email2" placeholder="seu@email.com" autocomplete="off">
+      <label>SENHA</label><input id="pass2" type="password" placeholder="Mínimo de 6 caracteres" autocomplete="new-password">
+      <label>CONFIRMAR SENHA</label><input id="pass3" type="password" placeholder="Repita a senha" autocomplete="new-password" onkeydown="if(event.key==='Enter')doAuth('register')">
+      <div class="err" id="err2"></div><button class="big" onclick="doAuth('register')"><img src="assets/feather.png">Entrar pro bando</button>
+      <div class="alt">Já faz parte do bando? <button class="g" onclick="authMode('login')">Voltar para o login</button></div></div>
+  </div><div class="foot"><i></i><i></i><i></i>Feito com carinho no Brasil</div></div></div></div>
 <div id="app"><div id="rail"><div class="ico logo" id="home" title="Início" onclick="goHome();spinLogo()"><img src="logo.png"></div><div class="sep"></div><div id="groups"></div>
 <div class="ico add" title="Criar grupo" onclick="newGroup()"><img src="assets/createserver.png"></div><div class="ico add" title="Entrar com código" onclick="joinGroup()"><img src="assets/joinserver.png"></div></div>
 <div id="panel"><div class="ph" id="ph"></div>
@@ -117,14 +171,14 @@ body.nodisplay .shr{display:none}@media (hover:none){.vw{opacity:1}}
 <div class="sec" id="psec"></div><div id="menu"></div><div class="me"><div id="avw"></div><b id="me"></b><span class="mb"><button id="bmic" title="Mutar microfone" onclick="toggleMic()"></button><button id="bdeaf" title="Ensurdecer" onclick="toggleDeaf()"></button><button id="bset" title="Configurações" aria-label="Configurações" onclick="openMenu()"></button></span></div></div>
 <div id="main"><div id="top"></div><div id="tiles"></div><div id="fr"></div><div id="msgs"></div>
 <div id="bar"><input id="msg" placeholder="Enviar mensagem..." onkeydown="if(event.key==='Enter')send()"></div></div></div>
-<div id="ring"></div><img id="flyer" src="assets/m_fly.png"><div id="scrim" onclick="toggleNav(false)"></div><div id="toast"></div><div id="bell"></div><div id="settings"></div><input type="file" id="gfile" accept="image/*" hidden onchange="setGroupAvatar(this)"><div id="dlg" onclick="if(event.target===this)closeDlg()"></div><div id="upd"></div><input type="file" id="file" accept="image/*" hidden onchange="setAvatar(this)">
+<div id="ring"></div><img id="flyer" src="assets/m_fly.png"><div id="boot"><img src="logo.png"><div>CONECTANDO AO SERVIDOR...</div></div><div id="scrim" onclick="toggleNav(false)"></div><div id="toast"></div><div id="bell"></div><div id="settings"></div><input type="file" id="gfile" accept="image/*" hidden onchange="setGroupAvatar(this)"><div id="dlg" onclick="if(event.target===this)closeDlg()"></div><div id="upd"></div><input type="file" id="file" accept="image/*" hidden onchange="setAvatar(this)">
 <div id="call"><div id="cav"></div><div id="ct"></div><div class="cr"><button id="cacc">Aceitar</button><button class="r" id="crej">Recusar</button></div></div>
 <div id="splash"><div id="slw"><img id="sl" src="logo.png"><div id="st">CARREGANDO...</div><div class="slg"><img src="assets/m_fly.png">Onde a amizade ganha asas.</div></div><div id="sw">Seja bem-vindo ao Lindesk<small>Sua turma, sua voz, seu Brasil</small></div><img class="fth" id="f1" src="assets/feather.png" style="width:80px"><img class="fth" id="f2" src="assets/feather.png" style="width:54px"><img class="fth" id="f3" src="assets/feather.png" style="width:38px"></div>
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 <script>
 const SERVER_URL = 'https://lindesk-server.onrender.com';
-const ICE = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' },
-  { urls: ['turn:openrelay.metered.ca:80', 'turn:openrelay.metered.ca:443', 'turn:openrelay.metered.ca:443?transport=tcp'], username: 'openrelayproject', credential: 'openrelayproject' }] };
+let ICE = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+async function loadIce() { try { ICE = { iceServers: await api('/ice') }; } catch (e) { console.warn('ice', e); } }
 let token, me, socket, groups = [], fr = { friends: [], incoming: [], outgoing: [] }, view = { t: 'home' }, chans = [], tab = 'all', chatId = null, local, peers = {};
 const $ = id => document.getElementById(id), wait = ms => new Promise(r => setTimeout(r, ms));
 const I = n => `<img class="ic" src="assets/${n}.png">`;
@@ -136,11 +190,30 @@ const av = (n, z = 38) => avatars[n] ? `<img class="av" style="width:${z}px;heig
 const reg = l => l.forEach(u => u.avatar && (avatars[u.username] = u.avatar));
 async function api(path, method = 'GET', body) {
   const r = await fetch(SERVER_URL + path, { method, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token }, body: body && JSON.stringify(body) });
-  const j = await r.json(); if (!r.ok) throw new Error(j.error); return j;
+  const j = await r.json().catch(() => ({})); if (!r.ok) { const e = new Error(j.error || 'Erro no servidor (' + r.status + ')'); e.status = r.status; throw e; } return j;
+}
+const PHRASES = ['Bora bater um papo? A arara já chegou!', 'Mais colorido que uma arara em dia de festa.', 'Voa alto, fala forte, chama a turma!', 'Aqui o papo é verde, amarelo e muito bom.', 'Pousa aqui: a turma já está te esperando!', 'Arara que é arara não fica falando sozinha.', 'Cada amigo é uma pena a mais nas suas asas.'];
+let phrI = 0, regMode = false, moodT;
+setInterval(() => { const b = $('bub'); if (!b || $('auth').style.display === 'none') return; b.classList.add('out'); setTimeout(() => { b.textContent = PHRASES[++phrI % PHRASES.length]; b.classList.remove('out'); }, 350); }, 4500);
+['neutral', 'fly', 'cool', 'wow', 'love', 'sad', 'angry', 'confused'].forEach(n => { new Image().src = 'assets/m_' + n + '.png'; });
+function mood(n, ms) { // o mascote reage ao que você faz
+  const mc = $('amascot'); mc.src = 'assets/m_' + n + '.png'; mc.classList.remove('pop'); void mc.offsetWidth; mc.classList.add('pop');
+  clearTimeout(moodT); if (ms) moodT = setTimeout(() => mood(regMode ? 'love' : 'neutral'), ms);
+}
+['user', 'email', 'email2'].forEach(id => { $(id).addEventListener('focus', () => mood('wow')); $(id).addEventListener('blur', () => mood(regMode ? 'love' : 'neutral')); });
+['pass', 'pass2', 'pass3'].forEach(id => { $(id).addEventListener('focus', () => mood('cool')); $(id).addEventListener('blur', () => mood(regMode ? 'love' : 'neutral')); });
+function authMode(m) { // alterna entre Entrar e Criar conta
+  regMode = m === 'register'; $('aform').classList.toggle('reg', regMode); mood(regMode ? 'love' : 'neutral');
+  $('err').textContent = $('err2').textContent = ''; setTimeout(() => $(regMode ? 'user' : 'email').focus(), 450);
 }
 async function doAuth(kind) {
-  try { const j = await api('/' + kind, 'POST', { username: $('user').value, email: $('email').value, password: $('pass').value }); token = j.token; me = j.user; me.status = me.status || 'online'; if (me.avatar) avatars[me.username] = me.avatar; saveSession(); start(); }
-  catch (e) { $('err').textContent = e.message; }
+  const reg = kind === 'register', box = $(reg ? 'err2' : 'err');
+  const u = $('user').value.trim(), em = $(reg ? 'email2' : 'email').value.trim(), pw = $(reg ? 'pass2' : 'pass').value;
+  const fail = t => { box.className = 'err'; box.textContent = t; mood('sad', 3200); };
+  if (reg) { if (u.length < 3) return fail('O nome de usuário precisa ter pelo menos 3 caracteres.'); if (pw.length < 6) return fail('A senha precisa ter pelo menos 6 caracteres.'); if (pw !== $('pass3').value) return fail('As senhas não são iguais.'); }
+  box.className = 'err ok'; box.textContent = reg ? 'Preparando o seu poleiro...' : 'Abrindo as asas... (na primeira vez o servidor pode demorar até 1 minuto)';
+  try { const j = await api('/' + kind, 'POST', { username: u, email: em, password: pw }); mood('love'); token = j.token; me = j.user; me.status = me.status || 'online'; if (me.avatar) avatars[me.username] = me.avatar; saveSession(); start(); }
+  catch (e) { fail(e.message); }
 }
 function start() {
   $('auth').style.display = 'none'; $('app').style.display = 'grid'; $('me').textContent = me.username; updMe(); updBar();
@@ -427,6 +500,7 @@ function hideCall() { $('call').style.display = 'none'; ring(false); clearTimeou
 async function joinVoice(video) {
   const room = roomId(); if (!room) return toast('Abra uma conversa com um amigo ou um canal de voz');
   leaveVoice();
+  await loadIce();
   try { rawStream = await navigator.mediaDevices.getUserMedia({ audio: { deviceId: micId || undefined, echoCancellation: true, noiseSuppression: false }, video }); local = new MediaStream([await buildMic(), ...rawStream.getVideoTracks()]); }
   catch (e) { return toast('Não consegui acessar o microfone/câmera'); }
   local.getAudioTracks().forEach(t => t.enabled = micOn);
@@ -553,11 +627,17 @@ function closePeer(id) { peers[id]?.close(); delete peers[id]; delete names[id];
 function leaveVoice() {
   stopShare(); Object.keys(peers).forEach(closePeer); local?.getTracks().forEach(t => t.stop()); rawStream?.getTracks().forEach(t => t.stop()); rawStream = null; if (dn) { dn.ctx.close().catch(() => {}); dn = null; } local = null; callRoom = null; $('tiles').innerHTML = ''; socket?.emit('voice:leave'); hideCall();
 }
-(async function restoreSession() {
+(async function restoreSession() { // mantém o login depois de fechar e abrir o app
   let s = null; try { s = JSON.parse(localStorage.getItem('lindeskSession')); } catch (e) {}
   if (!s || !s.token) return;
-  $('auth').style.visibility = 'hidden'; token = s.token;
-  try { me = await api('/me'); me.status = me.status || 'online'; if (me.avatar) avatars[me.username] = me.avatar; start(); }
-  catch (e) { if (!/conexão|fetch|Failed|Network/i.test(e.message)) localStorage.removeItem('lindeskSession'); else $('err').textContent = 'Sem conexão com o servidor. Tente de novo.'; token = null; $('auth').style.visibility = ''; }
+  token = s.token; $('boot').style.display = 'flex'; $('auth').style.visibility = 'hidden';
+  let ok = false;
+  for (let i = 0; i < 12 && !ok; i++) { // o servidor grátis pode levar ~1 minuto para acordar: tenta várias vezes
+    try { me = await api('/me'); ok = true; }
+    catch (e) { if (e.status === 401) { localStorage.removeItem('lindeskSession'); break; } await wait(i < 3 ? 2000 : 5000); }
+  }
+  $('boot').style.display = 'none'; $('auth').style.visibility = '';
+  if (ok) { me.status = me.status || 'online'; if (me.avatar) avatars[me.username] = me.avatar; saveSession(); start(); }
+  else { token = null; if (localStorage.getItem('lindeskSession')) $('err').textContent = 'Não consegui conectar ao servidor. Verifique a internet e abra o app de novo.'; }
 })();
 </script></body></html>

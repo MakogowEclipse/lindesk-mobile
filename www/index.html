@@ -143,6 +143,49 @@ body.mobile .ac{flex-direction:column}body.mobile .aside{flex:none;padding:calc(
 #top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 16px;min-height:64px;flex:0 0 auto;border-bottom:3px solid;border-image:linear-gradient(90deg,var(--g),var(--y),var(--b)) 1}
 #top .cb{margin-left:auto;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}#top button{padding:10px 16px;min-height:44px}
 #fr{flex:1;padding:16px;overflow:auto}.fr{display:flex;align-items:center;gap:12px;padding:10px;border-top:1px solid #12291b}.fr>span:last-child{margin-left:auto;display:flex;gap:8px}.mut{color:var(--mut)}
+
+/* ===== Lindesk: Arara · Brasil · Liberdade ===== */
+#rail{background:linear-gradient(180deg,#03100a,#06200f 60%,#041a2e)}
+.ico.on{box-shadow:0 0 0 3px #ffdf0044,0 6px 18px #009c3b66}
+.ph{font-size:18px;padding:18px 16px;background:linear-gradient(180deg,#10321d,var(--p))}
+.sec h4,.sn h4{letter-spacing:2px;color:var(--y);opacity:.85}
+.it{border-radius:12px;border-left:3px solid transparent;transition:.15s}.it:hover{transform:translateX(2px)}
+.it.on{border-left-color:var(--y);background:linear-gradient(90deg,#ffdf0018,var(--p2))}
+.me{background:linear-gradient(180deg,#08170e,#0b2616)}
+#main{background:radial-gradient(900px 420px at 90% -10%,#ffdf0016,transparent 60%),radial-gradient(700px 420px at 0 110%,#00277840,transparent 60%),linear-gradient(180deg,#0a1a11,#07130c)}
+#main::after,.sb::after{content:"";position:absolute;right:-30px;bottom:-20px;width:340px;height:340px;background:url(assets/m_fly.png) center/contain no-repeat;opacity:.05;pointer-events:none}
+#top{background:#08170ecc;backdrop-filter:blur(8px)}#top>b{font-size:19px;display:flex;align-items:center;gap:8px}
+#top .rd{border-radius:999px;padding:10px 20px}
+.live{display:inline-flex;align-items:center;padding:9px 18px;border-radius:999px;background:#c0392b33;border:1px solid #c0392b;color:#ffb4a8;font-weight:700;font-size:13px;letter-spacing:1px;animation:pulse 1.2s infinite}
+#msgs{padding:18px 22px}.m{padding:11px 15px;border-radius:16px;background:#0e2216;border:1px solid #16301f;transition:.15s}.m:hover{border-color:#2a5a3b}
+#bar{padding:0 22px 18px}#bar input{border-radius:999px;padding:16px 24px;border:1px solid #1d3a28}
+#bar input:focus{border-color:var(--y);box-shadow:0 0 0 3px #ffdf0022}
+.dc,#menu,#call,#upd,.card{background:linear-gradient(90deg,var(--g),var(--y),var(--b)) top/100% 5px no-repeat,#0c1d13;border-top:1px solid #1d3a28;border-radius:18px}
+.sn{background:linear-gradient(180deg,#0b2616,#06150d)}
+.sb{background:radial-gradient(700px 400px at 100% 0,#ffdf0014,transparent 60%),linear-gradient(180deg,#0a1a11,#07130c)}
+.sc h2{font-size:30px;background:var(--grad);-webkit-background-clip:text;color:transparent;display:inline-block}
+.pr{padding:12px 0}
+/* participantes da chamada */
+#tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;padding:12px 16px;background:transparent;flex:0 1 auto}
+#tiles .tile{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:linear-gradient(160deg,#103f25,#0a1a11);border:2px solid #1d3a28;border-top:3px solid var(--y)}
+#tiles video{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:contain;border:0;border-radius:0;background:#000}
+.tile.novid video{opacity:0}.tile:not(.novid) .tav{display:none}
+.tav{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1}.tav .av{transform:scale(1.8)}
+.tile .nm,.tile .vw{z-index:2}.tile .nm{background:#000b;padding:4px 12px;border-radius:999px;border-left:4px solid var(--g)}
+body.vcview #tiles{flex:1;max-height:none;align-content:center;overflow:auto}
+/* barra de controles da chamada */
+#dock{display:none;justify-content:center;gap:10px;flex:0 0 auto;margin:4px auto 12px;padding:14px 14px 10px;border-radius:22px;position:relative;z-index:3;
+background:linear-gradient(90deg,var(--g),var(--y),var(--b)) top/100% 4px no-repeat,#0b1a11f2;border:1px solid #1d3a28;box-shadow:0 12px 36px #000a}
+#dock.on{display:flex}
+.dk{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:76px;height:64px;padding:6px 10px;border-radius:16px;background:var(--p2);color:var(--t);border:1px solid #1d3a28}
+.dk small{font-size:11px;color:var(--mut);font-weight:600}.dk .ic{margin:0;width:26px;height:26px}
+.dk.off{background:#c0392b44;border-color:#c0392b}.dk.live{background:var(--grad);color:#06210f;animation:none}.dk.live small{color:#06210f}
+.dk.hang{background:#c0392b;color:#fff;border-color:#e74c3c}.dk.hang small{color:#ffd6d0}
+/* sala de voz vazia */
+.lobby{display:flex;flex-direction:column;align-items:center;text-align:center;padding:28px 16px}
+.lobby img{height:170px;animation:bob 3s ease-in-out infinite}.lobby h2{margin:10px 0 4px;font-size:26px;color:var(--y)}.lobby p{color:var(--mut);margin:0 0 14px}
+.lav{display:flex;gap:8px;margin-bottom:18px}.lb{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+body.mobile #dock{flex-wrap:wrap;margin-bottom:calc(var(--sab) + 8px)}
 </style></head><body>
 <div id="auth"><div class="ac">
   <div class="aside"><div class="sky"><i class="sun"></i><i class="cloud c1"></i><i class="cloud c2"></i><i class="cloud c3"></i>
@@ -169,7 +212,7 @@ body.mobile .ac{flex-direction:column}body.mobile .aside{flex:none;padding:calc(
 <div id="panel"><div class="ph" id="ph"></div>
 <div id="modal"><div class="fc"><b id="mt"></b><input id="mi" autocomplete="off" spellcheck="false"><div class="row"><button class="g" id="mcancel">Cancelar</button><button id="mok">OK</button></div></div></div>
 <div class="sec" id="psec"></div><div id="menu"></div><div class="me"><div id="avw"></div><b id="me"></b><span class="mb"><button id="bmic" title="Mutar microfone" onclick="toggleMic()"></button><button id="bdeaf" title="Ensurdecer" onclick="toggleDeaf()"></button><button id="bset" title="Configurações" aria-label="Configurações" onclick="openMenu()"></button></span></div></div>
-<div id="main"><div id="top"></div><div id="tiles"></div><div id="fr"></div><div id="msgs"></div>
+<div id="main"><div id="top"></div><div id="tiles"></div><div id="dock"></div><div id="fr"></div><div id="msgs"></div>
 <div id="bar"><input id="msg" placeholder="Enviar mensagem..." onkeydown="if(event.key==='Enter')send()"></div></div></div>
 <div id="ring"></div><img id="flyer" src="assets/m_fly.png"><div id="boot"><img src="logo.png"><div>CONECTANDO AO SERVIDOR...</div></div><div id="scrim" onclick="toggleNav(false)"></div><div id="toast"></div><div id="bell"></div><div id="settings"></div><input type="file" id="gfile" accept="image/*" hidden onchange="setGroupAvatar(this)"><div id="dlg" onclick="if(event.target===this)closeDlg()"></div><div id="upd"></div><input type="file" id="file" accept="image/*" hidden onchange="setAvatar(this)">
 <div id="call"><div id="cav"></div><div id="ct"></div><div class="cr"><button id="cacc">Aceitar</button><button class="r" id="crej">Recusar</button></div></div>
@@ -264,7 +307,9 @@ function renderPanel() {
   }
 }
 function renderMain() {
-  const calls = `<span class="cb"><button onclick="joinVoice(false)">${I('call')}Chamada</button><button onclick="joinVoice(true)">${I('camera')}Vídeo</button>` + (screen ? '<button class="r" onclick="stopShare()">⏹ Parar transmissão</button>' : `<button class="g shr" onclick="shareScreen()">${I('share')}Tela</button><button class="g shr" onclick="toggleShareAudio()">${shareAudio ? I('speaker') + 'Som: sim' : I('block') + 'Som: não'}</button>`) + '<button class="r" onclick="leaveVoice()">Sair</button></span>';
+  const inHere = callRoom && callRoom === roomId();
+  const calls = inHere ? '<span class="cb"><span class="live">● NA CHAMADA</span></span>'
+    : `<span class="cb"><button class="rd" onclick="joinVoice(false)">${I('call')}Ligar</button><button class="rd g" onclick="joinVoice(true)">${I('camera')}Vídeo</button></span>`;
   const chat = view.t === 'dm' || (view.t === 'srv' && view.ch && view.ch.type === 'text');
   $('fr').style.display = view.t === 'home' ? 'block' : 'none'; $('msgs').style.display = $('bar').style.display = chat ? '' : 'none';
   if (chat) setTimeout(() => $('msg').focus(), 30);
@@ -276,6 +321,26 @@ function renderMain() {
     : view.ch ? `<b>${view.ch.type === 'voice' ? '🔊' : '#'} ${esc(view.ch.name)}</b>${view.ch.type === 'voice' ? calls : ''}` : '';
   if (document.body.classList.contains('mobile')) $('top').insertAdjacentHTML('afterbegin', '<button class="g" onclick="toggleNav()">☰</button>');
   if (view.t === 'home') renderFriends();
+  const vc = view.t === 'srv' && !!view.ch && view.ch.type === 'voice';
+  document.body.classList.toggle('vcview', vc);
+  if (vc && !callRoom) {
+    const us = vusers[view.ch.id] || [];
+    $('fr').style.display = 'block';
+    $('fr').innerHTML = `<div class="lobby"><img src="assets/m_cool.png"><h2>${esc(view.ch.name)}</h2><p>${us.length ? us.length + ' na sala agora' : 'Ninguém na sala ainda. Chame a turma!'}</p><div class="lav">${us.map(u => av(u.username, 44)).join('')}</div><div class="lb"><button onclick="joinVoice(false)">${I('call')}Entrar na sala</button><button class="g" onclick="joinVoice(true)">${I('camera')}Entrar com vídeo</button></div></div>`;
+  }
+  updDock();
+}
+function updDock() {
+  document.body.classList.toggle('incall', !!callRoom);
+  const d = $('dock'); if (!d) return;
+  d.classList.toggle('on', !!callRoom);
+  if (!callRoom) { d.innerHTML = ''; return; }
+  const b = (cls, fn, ic, lb, t) => `<button class="dk ${cls}" title="${t || lb}" onclick="${fn}">${ic}<small>${lb}</small></button>`;
+  d.innerHTML = b(micOn ? '' : 'off', 'toggleMic()', I(micOn ? 'mic' : 'micoff'), micOn ? 'Mic' : 'Mutado', 'Ligar/desligar microfone')
+    + b(deaf ? 'off' : '', 'toggleDeaf()', I('headphones'), deaf ? 'Sem áudio' : 'Áudio', 'Ouvir/ensurdecer')
+    + (screen ? b('live', 'stopShare()', I('share'), 'Parar tela')
+      : b('', 'shareScreen()', I('share'), 'Tela', 'Transmitir a tela') + b('', 'toggleShareAudio()', shareAudio ? I('speaker') : I('block'), shareAudio ? 'Som: sim' : 'Som: não', 'Compartilhar o som da tela'))
+    + b('hang', 'leaveVoice()', I('logout'), 'Sair', 'Sair da chamada');
 }
 function renderFriends() {
   const row = (u, b) => `<div class="fr">${avs(u.username, 40, u.status)}<b>${esc(u.username)}</b><span>${b}</span></div>`;
@@ -482,7 +547,7 @@ const lbl = (id, sid) => (names[id] || 'Alguém') + (scrIds[id] === sid ? ' • 
 const roomId = () => view.t === 'dm' ? view.cid : view.ch && view.ch.type === 'voice' ? view.ch.id : null;
 function spinLogo() { const i = $('home').querySelector('img'); i.classList.remove('sp'); void i.offsetWidth; i.classList.add('sp'); }
 function updMe() { $('me').textContent = $('me').title = me.username; $('avw').innerHTML = avs(me.username, 38, me.status || 'online'); }
-function updBar() { $('bset').innerHTML = I('settings'); $('bmic').innerHTML = I(micOn ? 'mic' : 'micoff'); $('bdeaf').innerHTML = I('headphones'); $('bmic').classList.toggle('off', !micOn); $('bdeaf').classList.toggle('off', deaf); }
+function updBar() { $('bset').innerHTML = I('settings'); $('bmic').innerHTML = I(micOn ? 'mic' : 'micoff'); $('bdeaf').innerHTML = I('headphones'); $('bmic').classList.toggle('off', !micOn); $('bdeaf').classList.toggle('off', deaf); updDock(); }
 function ring(on) {
   clearInterval(ringT); if (!on || me.status === 'dnd' || !prefs.sound) return; const ac = ring.ac || (ring.ac = new AudioContext());
   const beep = () => [0, .25].forEach((d, i) => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = i ? 523 : 659; g.gain.value = .15; o.connect(g); g.connect(ac.destination); o.start(ac.currentTime + d); o.stop(ac.currentTime + d + .2); });
@@ -504,8 +569,8 @@ async function joinVoice(video) {
   try { rawStream = await navigator.mediaDevices.getUserMedia({ audio: { deviceId: micId || undefined, echoCancellation: true, noiseSuppression: false }, video }); local = new MediaStream([await buildMic(), ...rawStream.getVideoTracks()]); }
   catch (e) { return toast('Não consegui acessar o microfone/câmera'); }
   local.getAudioTracks().forEach(t => t.enabled = micOn);
-  if (video) tile('local', local, true, 'Você');
-  callRoom = room; socket.emit('voice:join', room); if (prefs.join) playSound('join');
+  tile('local', local, true, 'Você');
+  callRoom = room; socket.emit('voice:join', room); if (prefs.join) playSound('join'); renderMain();
   if (view.t === 'dm') showCall(`Chamando ${view.f.username}...`, view.f.username, false);
 }
 async function shareScreen() {
@@ -616,7 +681,9 @@ function tile(key, stream, mute, label) {
   if ($('t-' + key)) return; const d = document.createElement('div'); d.className = 'tile'; d.id = 't-' + key;
   const v = document.createElement('video'); v.srcObject = stream; v.autoplay = true; v.muted = mute; if (spkId && v.setSinkId) v.setSinkId(spkId).catch(() => {});
   d.ondblclick = () => document.fullscreenElement ? document.exitFullscreen() : d.requestFullscreen();
-  d.append(v); d.insertAdjacentHTML('beforeend', `<span class="nm">${esc(label)}</span>`);
+  d.append(v);
+  if (key !== 'screen') { d.insertAdjacentHTML('beforeend', `<div class="tav">${av(key === 'local' ? me.username : label, 76)}</div>`); const sync = () => d.classList.toggle('novid', !stream.getVideoTracks().some(t => t.readyState === 'live')); stream.addEventListener('addtrack', sync); stream.addEventListener('removetrack', sync); sync(); }
+  d.insertAdjacentHTML('beforeend', `<span class="nm">${esc(label)}</span>`);
   if (key !== 'local' && key !== 'screen') { // controle de volume de cada transmissão/pessoa
     d.insertAdjacentHTML('beforeend', '<span class="vw" title="Volume">🔊<input type="range" class="vol" min="0" max="1" step="0.05" value="1"></span>');
     const r = d.querySelector('.vol'); r.oninput = () => { v.volume = +r.value; }; r.ondblclick = e => e.stopPropagation();
@@ -625,7 +692,7 @@ function tile(key, stream, mute, label) {
 }
 function closePeer(id) { peers[id]?.close(); delete peers[id]; delete names[id]; delete scrIds[id]; [...$('tiles').children].forEach(v => v.id.startsWith('t-' + id) && v.remove()); }
 function leaveVoice() {
-  stopShare(); Object.keys(peers).forEach(closePeer); local?.getTracks().forEach(t => t.stop()); rawStream?.getTracks().forEach(t => t.stop()); rawStream = null; if (dn) { dn.ctx.close().catch(() => {}); dn = null; } local = null; callRoom = null; $('tiles').innerHTML = ''; socket?.emit('voice:leave'); hideCall();
+  stopShare(); Object.keys(peers).forEach(closePeer); local?.getTracks().forEach(t => t.stop()); rawStream?.getTracks().forEach(t => t.stop()); rawStream = null; if (dn) { dn.ctx.close().catch(() => {}); dn = null; } local = null; callRoom = null; $('tiles').innerHTML = ''; socket?.emit('voice:leave'); hideCall(); try { renderMain(); } catch (e) {}
 }
 (async function restoreSession() { // mantém o login depois de fechar e abrir o app
   let s = null; try { s = JSON.parse(localStorage.getItem('lindeskSession')); } catch (e) {}

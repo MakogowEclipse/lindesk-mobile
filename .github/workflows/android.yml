@@ -1,0 +1,42 @@
+name: Gerar APK do Lindesk
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 21 }
+      - name: Instalar SDK do Android
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;36.0.0" > /dev/null
+      - name: Chave de assinatura fixa (permite atualizar o app por cima)
+        run: mkdir -p ~/.android && cp debug.keystore ~/.android/debug.keystore
+      - name: Gerar projeto Android
+        run: |
+          npm install
+          npx cap add android
+          node scripts/patch-android.js
+          npx cap sync android
+      - name: Compilar APK
+        working-directory: android
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+      - name: Renomear
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk Lindesk.apk
+      - uses: actions/upload-artifact@v4
+        with: { name: Lindesk-apk, path: Lindesk.apk }
+      - name: Publicar na aba Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android-latest
+          name: Lindesk para Android
+          body: Baixe o arquivo Lindesk.apk e instale no celular.
+          files: Lindesk.apk

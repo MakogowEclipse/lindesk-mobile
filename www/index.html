@@ -22,8 +22,30 @@ button:hover{filter:brightness(1.08)}button:focus-visible{outline:2px solid var(
 .me{display:flex;align-items:center;gap:10px;padding:0 10px 0 12px;height:var(--meh);flex:0 0 auto;min-width:0;background:#08170e;border-top:1px solid #12291b}.me #avw{display:flex;flex:0 0 auto}.me #me{flex:1 1 0;min-width:0;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .av{width:38px;height:38px;border-radius:50%;background:var(--b);color:var(--y);display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
 #main{display:flex;flex-direction:column;height:100vh;min-width:0;min-height:0;overflow:hidden;position:relative;background:linear-gradient(180deg,#0a1a11,#07130c)}
-#tiles{display:flex;flex-wrap:wrap;gap:8px;padding:8px;background:#050d08;flex:0 0 auto;max-height:40vh;overflow-y:auto}#tiles:empty{display:none}
-#tiles video{height:clamp(110px,20vh,200px);max-width:100%;background:#000;border-radius:10px;border:2px solid var(--b)}
+#stage{display:none;position:relative;flex-direction:column;flex:0 0 46%;min-height:240px;background:radial-gradient(circle at 50% 0%,#12331f,#07130c 72%);border-bottom:1px solid #12291b}#stage.full{flex:1}
+#tiles{display:none;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));grid-auto-rows:minmax(130px,1fr);gap:14px;padding:16px 16px 98px;flex:1;min-height:0;overflow:auto}#tiles:empty{display:none!important}
+.tile{min-height:0;border-radius:20px;background:linear-gradient(135deg,#0f3d22,#0c1d13);overflow:hidden;position:relative;border:2px solid #1d3a28;transition:border-color .2s,box-shadow .2s;display:flex;align-items:center;justify-content:center}
+.tile video{width:100%;height:100%;object-fit:cover;background:#000}.tile.scr video{object-fit:contain}.tile.aud video{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+.tile .tav{display:none}.tile.aud .tav{display:flex}.tile.speak{border-color:var(--y);box-shadow:0 0 0 4px #ffdf0033,0 0 28px #ffdf0044}
+#dock{display:none;position:absolute;left:50%;bottom:16px;transform:translateX(-50%);gap:12px;padding:10px 16px;border-radius:40px;background:#0c1d13ee;border:1px solid #2a5a3b;box-shadow:0 12px 40px #000a;backdrop-filter:blur(8px);z-index:5}
+.dk{width:56px;height:56px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;background:#16301f;border:2px solid #2a5a3b;box-shadow:none;transition:.15s;position:relative}.dk img{width:30px;height:30px;margin:0}
+.dk:hover{transform:translateY(-3px);background:#1d3d29}.dk.on{background:var(--grad);border-color:var(--y)}.dk.off{background:#4a1d1d;border-color:#c0392b}.dk.hang{background:#d63031;border-color:#ff7675}.dk.hang img,.rb.hang img{transform:rotate(135deg)}
+.dk i.x{position:absolute;right:-2px;top:-2px;font-style:normal;font-size:12px;background:#d63031;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center}
+#vstate{display:none;flex:1;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px}.vmasc{width:170px;animation:bob 3s ease-in-out infinite}.vstate h2{margin:0}
+.vfaces{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.big2{display:flex;align-items:center;gap:8px;border-radius:30px;padding:14px 24px}
+.rb{width:44px;height:44px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;background:#16301f;border:2px solid #2a5a3b;color:var(--t);box-shadow:none}.rb:hover{background:var(--grad)}.rb img{margin:0;width:26px;height:26px}
+.rb.hang{background:#d63031;border-color:#ff7675;width:38px;height:38px}.rb.hang img{width:20px;height:20px}.ttl{display:flex;flex-direction:column;line-height:1.2}.ttl small{color:var(--mut)}
+.vc{display:flex;align-items:center;gap:10px;margin:0 10px 8px;padding:10px 12px;border-radius:14px;background:linear-gradient(135deg,#0f3d22,#12291b);border:1px solid #2a5a3b}.vc .vct{flex:1;min-width:0;display:flex;flex-direction:column}
+.vc b{color:#2ecc71;font-size:13px}.vc span{color:var(--mut);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pulse{width:10px;height:10px;border-radius:50%;background:#2ecc71;animation:pls 1.4s infinite}@keyframes pls{50%{box-shadow:0 0 0 7px #2ecc7133}}
+#fr{padding:20px 24px}.hero3{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 28px;border-radius:24px;margin-bottom:16px;overflow:hidden;position:relative;background:radial-gradient(circle at 85% 30%,#ffdf0055,transparent 45%),linear-gradient(120deg,#0b5a2c,#0c1d13 58%,#002776aa);border:1px solid #2a5a3b}
+.hero3 small{color:var(--y);font-weight:800;letter-spacing:1px}.hero3 h1{margin:2px 0 6px;font-size:34px}.hero3 p{margin:0 0 10px;color:#cfe6d3}.hero3 .tag{display:inline-block;padding:4px 12px;border-radius:20px;background:#ffffff14;font-size:12px}.hero3>img{width:150px;flex-shrink:0;animation:bob 3s ease-in-out infinite}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}.stat{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:#0c1d13;border:1px solid #1d3a28}.stat img{width:34px;height:34px}.stat b{font-size:22px;display:block}.stat span{color:var(--mut);font-size:12px}
+.qas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}.qa{display:flex;align-items:center;gap:14px;padding:16px;border-radius:18px;cursor:pointer;background:linear-gradient(135deg,#12291b,#0c1d13);border:1px solid #1d3a28;transition:.18s}
+.qa:hover{transform:translateY(-4px);border-color:var(--y);box-shadow:0 10px 24px #0008}.qa img{width:46px;height:46px}.qa b{display:block}.qa span{color:var(--mut);font-size:12px}
+.sh{margin:6px 0 10px;font-size:12px;letter-spacing:1px;color:var(--mut);font-weight:800}.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.fcard{display:flex;flex-direction:column;align-items:center;gap:4px;padding:18px 14px;border-radius:20px;background:#0c1d13;border:1px solid #1d3a28;transition:.18s}.fcard:hover{transform:translateY(-4px);border-color:#2a5a3b}.fcard b{font-size:16px;margin-top:6px}.fcard small{color:var(--mut)}
+.fcard .fb{display:flex;gap:8px;margin-top:10px}.fcard .fb button{padding:8px 12px;min-height:0}.fcard .fb .ic{margin:0}.tip{display:flex;align-items:center;gap:12px;margin-top:18px;padding:14px 18px;border-radius:16px;background:#12291b;border:1px dashed #2a5a3b}.tip img{width:52px}
+body.mobile #top .cb{width:auto;margin-left:auto;overflow:visible}body.mobile #dock{gap:8px;padding:8px 10px;bottom:10px}body.mobile .dk{width:48px;height:48px}body.mobile #stage{flex:0 0 42%}body.mobile #fr{padding:14px}body.mobile .hero3>img{width:90px}body.mobile .hero3{padding:16px}body.mobile .hero3 h1{font-size:26px}
 #msgs{flex:1 1 0;min-height:120px;overflow:auto;padding:16px}.m{display:flex;gap:12px;margin-bottom:14px}.m small{color:var(--mut)}.m b{color:var(--y)}
 #bar{padding:0 16px 16px;flex:0 0 auto;position:relative;z-index:2}#bar input{background:var(--p2);padding:16px;border-radius:10px}
 #empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--mut);background:var(--bg)}
@@ -144,48 +166,25 @@ body.mobile .ac{flex-direction:column}body.mobile .aside{flex:none;padding:calc(
 #top .cb{margin-left:auto;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}#top button{padding:10px 16px;min-height:44px}
 #fr{flex:1;padding:16px;overflow:auto}.fr{display:flex;align-items:center;gap:12px;padding:10px;border-top:1px solid #12291b}.fr>span:last-child{margin-left:auto;display:flex;gap:8px}.mut{color:var(--mut)}
 
-/* ===== Lindesk: Arara · Brasil · Liberdade ===== */
-#rail{background:linear-gradient(180deg,#03100a,#06200f 60%,#041a2e)}
-.ico.on{box-shadow:0 0 0 3px #ffdf0044,0 6px 18px #009c3b66}
-.ph{font-size:18px;padding:18px 16px;background:linear-gradient(180deg,#10321d,var(--p))}
-.sec h4,.sn h4{letter-spacing:2px;color:var(--y);opacity:.85}
-.it{border-radius:12px;border-left:3px solid transparent;transition:.15s}.it:hover{transform:translateX(2px)}
-.it.on{border-left-color:var(--y);background:linear-gradient(90deg,#ffdf0018,var(--p2))}
-.me{background:linear-gradient(180deg,#08170e,#0b2616)}
-#main{background:radial-gradient(900px 420px at 90% -10%,#ffdf0016,transparent 60%),radial-gradient(700px 420px at 0 110%,#00277840,transparent 60%),linear-gradient(180deg,#0a1a11,#07130c)}
-#main::after,.sb::after{content:"";position:absolute;right:-30px;bottom:-20px;width:340px;height:340px;background:url(assets/m_fly.png) center/contain no-repeat;opacity:.05;pointer-events:none}
-#top{background:#08170ecc;backdrop-filter:blur(8px)}#top>b{font-size:19px;display:flex;align-items:center;gap:8px}
-#top .rd{border-radius:999px;padding:10px 20px}
-.live{display:inline-flex;align-items:center;padding:9px 18px;border-radius:999px;background:#c0392b33;border:1px solid #c0392b;color:#ffb4a8;font-weight:700;font-size:13px;letter-spacing:1px;animation:pulse 1.2s infinite}
-#msgs{padding:18px 22px}.m{padding:11px 15px;border-radius:16px;background:#0e2216;border:1px solid #16301f;transition:.15s}.m:hover{border-color:#2a5a3b}
-#bar{padding:0 22px 18px}#bar input{border-radius:999px;padding:16px 24px;border:1px solid #1d3a28}
-#bar input:focus{border-color:var(--y);box-shadow:0 0 0 3px #ffdf0022}
-.dc,#menu,#call,#upd,.card{background:linear-gradient(90deg,var(--g),var(--y),var(--b)) top/100% 5px no-repeat,#0c1d13;border-top:1px solid #1d3a28;border-radius:18px}
-.sn{background:linear-gradient(180deg,#0b2616,#06150d)}
-.sb{background:radial-gradient(700px 400px at 100% 0,#ffdf0014,transparent 60%),linear-gradient(180deg,#0a1a11,#07130c)}
-.sc h2{font-size:30px;background:var(--grad);-webkit-background-clip:text;color:transparent;display:inline-block}
-.pr{padding:12px 0}
-/* participantes da chamada */
-#tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;padding:12px 16px;background:transparent;flex:0 1 auto}
-#tiles .tile{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:linear-gradient(160deg,#103f25,#0a1a11);border:2px solid #1d3a28;border-top:3px solid var(--y)}
-#tiles video{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:contain;border:0;border-radius:0;background:#000}
-.tile.novid video{opacity:0}.tile:not(.novid) .tav{display:none}
-.tav{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1}.tav .av{transform:scale(1.8)}
-.tile .nm,.tile .vw{z-index:2}.tile .nm{background:#000b;padding:4px 12px;border-radius:999px;border-left:4px solid var(--g)}
-body.vcview #tiles{flex:1;max-height:none;align-content:center;overflow:auto}
-/* barra de controles da chamada */
-#dock{display:none;justify-content:center;gap:10px;flex:0 0 auto;margin:4px auto 12px;padding:14px 14px 10px;border-radius:22px;position:relative;z-index:3;
-background:linear-gradient(90deg,var(--g),var(--y),var(--b)) top/100% 4px no-repeat,#0b1a11f2;border:1px solid #1d3a28;box-shadow:0 12px 36px #000a}
-#dock.on{display:flex}
-.dk{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:76px;height:64px;padding:6px 10px;border-radius:16px;background:var(--p2);color:var(--t);border:1px solid #1d3a28}
-.dk small{font-size:11px;color:var(--mut);font-weight:600}.dk .ic{margin:0;width:26px;height:26px}
-.dk.off{background:#c0392b44;border-color:#c0392b}.dk.live{background:var(--grad);color:#06210f;animation:none}.dk.live small{color:#06210f}
-.dk.hang{background:#c0392b;color:#fff;border-color:#e74c3c}.dk.hang small{color:#ffd6d0}
-/* sala de voz vazia */
-.lobby{display:flex;flex-direction:column;align-items:center;text-align:center;padding:28px 16px}
-.lobby img{height:170px;animation:bob 3s ease-in-out infinite}.lobby h2{margin:10px 0 4px;font-size:26px;color:var(--y)}.lobby p{color:var(--mut);margin:0 0 14px}
-.lav{display:flex;gap:8px;margin-bottom:18px}.lb{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-body.mobile #dock{flex-wrap:wrap;margin-bottom:calc(var(--sab) + 8px)}
+/* ===== fundo: degradê + palmeiras ===== */
+#main,.sb{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 320'%3E%3Cdefs%3E%3Cpath id='l' d='M0 0C30-34 84-30 120 18C84-10 36-12 0 0Z'/%3E%3C/defs%3E%3Cg fill='%230f3a22'%3E%3Cpath d='M98 320C104 230 108 170 128 100L140 102C126 170 124 236 128 320Z'/%3E%3Cg transform='translate(134 100)'%3E%3Cuse href='%23l' transform='rotate(-80)'/%3E%3Cuse href='%23l' transform='rotate(-48)'/%3E%3Cuse href='%23l' transform='rotate(-16)'/%3E%3Cuse href='%23l' transform='rotate(16)'/%3E%3Cuse href='%23l' transform='scale(-1 1) rotate(-80)'/%3E%3Cuse href='%23l' transform='scale(-1 1) rotate(-48)'/%3E%3Cuse href='%23l' transform='scale(-1 1) rotate(-16)'/%3E%3Cuse href='%23l' transform='scale(-1 1) rotate(16)'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") left -30px bottom -8px/250px auto no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 320'%3E%3Cdefs%3E%3Cpath id='l' d='M0 0C30-34 84-30 120 18C84-10 36-12 0 0Z'/%3E%3C/defs%3E%3Cg fill='%230f3a22'%3E%3Cpath d='M98 320C104 230 108 170 128 100L140 102C126 170 124 236 128 320Z'/%3E%3Cg transform='translate(134 100)'%3E%3Cuse href='%23l' transform='rotate(-80)'/%3E%3Cuse href='%23l' transform='rotate(-48)'/%3E%3Cuse href='%23l' transform='rotate(-16)'/%3E%3Cuse href='%23l' transform='rotate(16)'/%3E%3Cuse href='%23l' transform='scale(-1 1) rotate(-80)'/%3E%3Cuse href='%23l' transform='scale(-1 1) rotate(-48)'/%3E%3Cuse href='%23l' transform='scale(-1 1) rotate(-16)'/%3E%3Cuse href='%23l' transform='scale(-1 1) rotate(16)'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") right 10px bottom -16px/320px auto no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 320'%3E%3Cdefs%3E%3Cpath id='l' d='M0 0C30-34 84-30 120 18C84-10 36-12 0 0Z'/%3E%3C/defs%3E%3Cg fill='%230f3a22'%3E%3Cpath d='M98 320C104 230 108 170 128 100L140 102C126 170 124 236 128 320Z'/%3E%3Cg transform='translate(134 100)'%3E%3Cuse href='%23l' transform='rotate(-80)'/%3E%3Cuse href='%23l' transform='rotate(-48)'/%3E%3Cuse href='%23l' transform='rotate(-16)'/%3E%3Cuse href='%23l' transform='rotate(16)'/%3E%3Cuse href='%23l' transform='scale(-1 1) rotate(-80)'/%3E%3Cuse href='%23l' transform='scale(-1 1) rotate(-48)'/%3E%3Cuse href='%23l' transform='scale(-1 1) rotate(-16)'/%3E%3Cuse href='%23l' transform='scale(-1 1) rotate(16)'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") right 230px bottom -30px/180px auto no-repeat,linear-gradient(180deg,#17502f 0%,#0b2616 45%,#030b06 100%)}
+body.mobile #main{background-size:150px auto,190px auto,110px auto,auto}
+/* ===== perfil ===== */
+.pl{cursor:pointer}.pl:hover{filter:brightness(1.15)}
+.pwrap{width:min(380px,92vw);display:flex;flex-direction:column;gap:10px;align-items:stretch}
+.pcard{position:relative;border-radius:22px;overflow:hidden;box-shadow:0 18px 50px #000b;border:1px solid #ffffff22;text-align:left}
+.pban{height:130px;background-size:cover;background-position:center}
+.pav{position:absolute;left:20px;top:84px;border-radius:50%;padding:5px;background:#0009}
+.pbody{padding:58px 22px 20px}.pbody h3{margin:0;font-size:24px}.pbody small{opacity:.8}
+.pbody p{margin:12px 0 0;white-space:pre-wrap;word-break:break-word;background:#0003;padding:10px 12px;border-radius:12px}.pact{margin-top:14px;display:flex;gap:8px}
+#ppv{margin:0 0 18px;max-width:380px}.pre{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.chip{padding:8px 14px;min-height:0;border-radius:999px;color:#fff;border:1px solid #ffffff33;text-shadow:0 1px 3px #000}
+input[type=color]{width:46px;height:38px;padding:2px;border-radius:10px;background:var(--p2);border:1px solid #2a5a3b}
+.sc textarea{width:100%;min-height:76px;resize:vertical;background:var(--p2);color:var(--t);border:1px solid #2a5a3b;border-radius:10px;padding:10px;font:inherit}
+/* ===== imagens no chat ===== */
+#bar{display:flex;gap:8px;align-items:center}#bar input#msg{flex:1}#bar .att{padding:0 14px;min-height:50px;font-size:20px}
+.mimg{display:block;max-width:min(420px,100%);max-height:320px;border-radius:14px;margin-top:6px;cursor:zoom-in;border:1px solid #1d3a28}
+.lbox{position:fixed;inset:0;z-index:95;background:#000d;display:flex;align-items:center;justify-content:center;cursor:zoom-out}.lbox img{max-width:92vw;max-height:92vh;border-radius:12px}
 </style></head><body>
 <div id="auth"><div class="ac">
   <div class="aside"><div class="sky"><i class="sun"></i><i class="cloud c1"></i><i class="cloud c2"></i><i class="cloud c3"></i>
@@ -211,9 +210,9 @@ body.mobile #dock{flex-wrap:wrap;margin-bottom:calc(var(--sab) + 8px)}
 <div class="ico add" title="Criar grupo" onclick="newGroup()"><img src="assets/createserver.png"></div><div class="ico add" title="Entrar com código" onclick="joinGroup()"><img src="assets/joinserver.png"></div></div>
 <div id="panel"><div class="ph" id="ph"></div>
 <div id="modal"><div class="fc"><b id="mt"></b><input id="mi" autocomplete="off" spellcheck="false"><div class="row"><button class="g" id="mcancel">Cancelar</button><button id="mok">OK</button></div></div></div>
-<div class="sec" id="psec"></div><div id="menu"></div><div class="me"><div id="avw"></div><b id="me"></b><span class="mb"><button id="bmic" title="Mutar microfone" onclick="toggleMic()"></button><button id="bdeaf" title="Ensurdecer" onclick="toggleDeaf()"></button><button id="bset" title="Configurações" aria-label="Configurações" onclick="openMenu()"></button></span></div></div>
-<div id="main"><div id="top"></div><div id="tiles"></div><div id="dock"></div><div id="fr"></div><div id="msgs"></div>
-<div id="bar"><input id="msg" placeholder="Enviar mensagem..." onkeydown="if(event.key==='Enter')send()"></div></div></div>
+<div class="sec" id="psec"></div><div id="menu"></div><div id="vcard"></div><div class="me"><div id="avw"></div><b id="me"></b><span class="mb"><button id="bmic" title="Mutar microfone" onclick="toggleMic()"></button><button id="bdeaf" title="Ensurdecer" onclick="toggleDeaf()"></button><button id="bset" title="Configurações" aria-label="Configurações" onclick="openMenu()"></button></span></div></div>
+<div id="main"><div id="top"></div><div id="stage"><div id="tiles"></div><div id="vstate"></div><div id="dock"></div></div><div id="fr"></div><div id="msgs"></div>
+<div id="bar"><button class="g att" title="Enviar imagem" onclick="$('imgfile').click()"><img class="ic" src="assets/clipe.png" style="margin:0;width:28px;height:28px"></button><input id="msg" placeholder="Enviar mensagem..." onkeydown="if(event.key==='Enter')send()"><input type="file" id="imgfile" accept="image/*" hidden onchange="sendImage(this.files[0]);this.value=''"></div></div></div>
 <div id="ring"></div><img id="flyer" src="assets/m_fly.png"><div id="boot"><img src="logo.png"><div>CONECTANDO AO SERVIDOR...</div></div><div id="scrim" onclick="toggleNav(false)"></div><div id="toast"></div><div id="bell"></div><div id="settings"></div><input type="file" id="gfile" accept="image/*" hidden onchange="setGroupAvatar(this)"><div id="dlg" onclick="if(event.target===this)closeDlg()"></div><div id="upd"></div><input type="file" id="file" accept="image/*" hidden onchange="setAvatar(this)">
 <div id="call"><div id="cav"></div><div id="ct"></div><div class="cr"><button id="cacc">Aceitar</button><button class="r" id="crej">Recusar</button></div></div>
 <div id="splash"><div id="slw"><img id="sl" src="logo.png"><div id="st">CARREGANDO...</div><div class="slg"><img src="assets/m_fly.png">Onde a amizade ganha asas.</div></div><div id="sw">Seja bem-vindo ao Lindesk<small>Sua turma, sua voz, seu Brasil</small></div><img class="fth" id="f1" src="assets/feather.png" style="width:80px"><img class="fth" id="f2" src="assets/feather.png" style="width:54px"><img class="fth" id="f3" src="assets/feather.png" style="width:38px"></div>
@@ -277,7 +276,7 @@ function start() {
   socket.on('friends:update', loadFriends);
   socket.on('call:ring', r => showCall(`${r.username} está te chamando...`, r.username, true));
   socket.on('call:cancel', hideCall);
-  socket.on('voice:users', ({ cid, users }) => { reg(users); vusers[cid] = users; renderPanel(); });
+  socket.on('voice:users', ({ cid, users }) => { reg(users); vusers[cid] = users; renderPanel(); if (view.t === 'srv' && view.ch && view.ch.type === 'voice') renderMain(); });
   socket.on('voice:peers', list => { list.forEach(p => { names[p.id] = p.username; if (!peers[p.id]) makePeer(p.id); }); if (list.length) hideCall(); });
   socket.on('voice:signal', onSignal);
   socket.on('group:left', gid => { if (view.t === 'srv' && view.g.id == gid) { if (callRoom && chans.some(c => c.id === callRoom)) leaveVoice(); goHome(); } loadGroups(); });
@@ -289,7 +288,7 @@ function start() {
 }
 async function loadGroups() { groups = await api('/groups'); render(); }
 async function loadFriends() { fr = await api('/friends'); sortFriends(); reg([...fr.friends, ...fr.incoming, ...fr.outgoing]); render(); }
-const render = () => { renderRail(); renderPanel(); renderMain(); };
+const render = () => { renderRail(); renderPanel(); renderVC(); renderMain(); };
 function renderRail() {
   $('home').classList.toggle('on', view.t !== 'srv');
   $('groups').innerHTML = groups.map(g => `<div class="ico ${view.t === 'srv' && view.g.id == g.id ? 'on' : ''}" title="${esc(g.name)}" onclick="openGroup(${g.id})">${g.avatar ? `<img class="gi" src="${g.avatar}">` : esc(g.name.slice(0, 2).toUpperCase())}</div>`).join('');
@@ -306,49 +305,68 @@ function renderPanel() {
     p.innerHTML = ['text', 'voice'].map(t => `<h4>CANAIS DE ${t === 'text' ? 'TEXTO' : 'VOZ'} <b class="pl" title="Criar canal" onclick="newChannel('${t}')">+</b></h4>` + chans.filter(c => c.type === t).map(row).join('')).join('');
   }
 }
+const inCallView = () => !!(local && callRoom && roomId() === callRoom);
+const ST = { online: 'Online', dnd: 'Não perturbe', offline: 'Offline' };
 function renderMain() {
-  const inHere = callRoom && callRoom === roomId();
-  const calls = inHere ? '<span class="cb"><span class="live">● NA CHAMADA</span></span>'
-    : `<span class="cb"><button class="rd" onclick="joinVoice(false)">${I('call')}Ligar</button><button class="rd g" onclick="joinVoice(true)">${I('camera')}Vídeo</button></span>`;
   const chat = view.t === 'dm' || (view.t === 'srv' && view.ch && view.ch.type === 'text');
+  const vch = view.t === 'srv' && view.ch && view.ch.type === 'voice', inV = inCallView();
   $('fr').style.display = view.t === 'home' ? 'block' : 'none'; $('msgs').style.display = $('bar').style.display = chat ? '' : 'none';
   if (chat) setTimeout(() => $('msg').focus(), 30);
   const ro = chat && view.t === 'srv' && view.ch.perm_write === 'admin' && !isAdm(view.g);
   $('msg').disabled = !!ro; $('msg').placeholder = ro ? 'Somente admins podem escrever neste canal' : 'Enviar mensagem...';
+  const stg = $('stage'); stg.style.display = (inV || vch) ? 'flex' : 'none'; stg.classList.toggle('full', !!vch);
+  $('tiles').style.display = inV ? 'grid' : 'none'; $('dock').style.display = inV ? 'flex' : 'none'; $('vstate').style.display = vch && !inV ? 'flex' : 'none';
+  if (inV) renderDock(); if (vch && !inV) renderVState();
   const tb = (k, l) => `<button class="${tab === k ? '' : 'g'}" onclick="setTab('${k}')">${l}</button>`;
-  $('top').innerHTML = view.t === 'home' ? `<b>${I('friends')} Amigos</b>${tb('all', 'Todos')}${tb('pend', 'Pendente')}${tb('add', 'Adicionar amigo')}`
-    : view.t === 'dm' ? `<b>@ ${esc(view.f.username)}</b>${calls}`
-    : view.ch ? `<b>${view.ch.type === 'voice' ? '🔊' : '#'} ${esc(view.ch.name)}</b>${view.ch.type === 'voice' ? calls : ''}` : '';
+  const fst = view.f ? (fr.friends.find(x => x.id === view.f.id) || view.f).status || 'offline' : 'offline';
+  const rb = (ic, t, v) => `<button class="rb" title="${t}" onclick="joinVoice(${v})">${I(ic)}</button>`;
+  $('top').innerHTML = view.t === 'home' ? `<b>${I('friends')} Amigos</b>${tb('all', 'Todos')}${tb('on', 'Online')}${tb('pend', 'Pendente')}${tb('add', 'Adicionar amigo')}`
+    : view.t === 'dm' ? `<span class="pl" data-u="${encodeURIComponent(view.f.username)}">${avs(view.f.username, 38, fst)}</span><div class="ttl"><b>${esc(view.f.username)}</b><small>${ST[fst] || 'Offline'}</small></div>${inV ? '' : `<span class="cb">${rb('call', 'Ligar', false)}${rb('camera', 'Chamada de vídeo', true)}</span>`}`
+    : view.ch ? `<b>${view.ch.type === 'voice' ? '🔊' : '#'} ${esc(view.ch.name)}</b>${vch ? `<small class="mut">${(vusers[view.ch.id] || []).length} na sala</small>` : ''}` : '';
   if (document.body.classList.contains('mobile')) $('top').insertAdjacentHTML('afterbegin', '<button class="g" onclick="toggleNav()">☰</button>');
   if (view.t === 'home') renderFriends();
-  const vc = view.t === 'srv' && !!view.ch && view.ch.type === 'voice';
-  document.body.classList.toggle('vcview', vc);
-  if (vc && !callRoom) {
-    const us = vusers[view.ch.id] || [];
-    $('fr').style.display = 'block';
-    $('fr').innerHTML = `<div class="lobby"><img src="assets/m_cool.png"><h2>${esc(view.ch.name)}</h2><p>${us.length ? us.length + ' na sala agora' : 'Ninguém na sala ainda. Chame a turma!'}</p><div class="lav">${us.map(u => av(u.username, 44)).join('')}</div><div class="lb"><button onclick="joinVoice(false)">${I('call')}Entrar na sala</button><button class="g" onclick="joinVoice(true)">${I('camera')}Entrar com vídeo</button></div></div>`;
-  }
-  updDock();
 }
-function updDock() {
-  document.body.classList.toggle('incall', !!callRoom);
-  const d = $('dock'); if (!d) return;
-  d.classList.toggle('on', !!callRoom);
-  if (!callRoom) { d.innerHTML = ''; return; }
-  const b = (cls, fn, ic, lb, t) => `<button class="dk ${cls}" title="${t || lb}" onclick="${fn}">${ic}<small>${lb}</small></button>`;
-  d.innerHTML = b(micOn ? '' : 'off', 'toggleMic()', I(micOn ? 'mic' : 'micoff'), micOn ? 'Mic' : 'Mutado', 'Ligar/desligar microfone')
-    + b(deaf ? 'off' : '', 'toggleDeaf()', I('headphones'), deaf ? 'Sem áudio' : 'Áudio', 'Ouvir/ensurdecer')
-    + (screen ? b('live', 'stopShare()', I('share'), 'Parar tela')
-      : b('', 'shareScreen()', I('share'), 'Tela', 'Transmitir a tela') + b('', 'toggleShareAudio()', shareAudio ? I('speaker') : I('block'), shareAudio ? 'Som: sim' : 'Som: não', 'Compartilhar o som da tela'))
-    + b('hang', 'leaveVoice()', I('logout'), 'Sair', 'Sair da chamada');
+function renderDock() { // barra flutuante de controles da chamada
+  const cam = local && local.getVideoTracks().length;
+  $('dock').innerHTML = `<button class="dk ${micOn ? '' : 'off'}" title="${micOn ? 'Mutar microfone' : 'Ativar microfone'}" onclick="toggleMic()">${I(micOn ? 'mic' : 'micoff')}</button>
+    <button class="dk ${cam ? 'on' : ''}" title="${cam ? 'Desligar câmera' : 'Ligar câmera'}" onclick="toggleCam()">${I('camera')}</button>
+    ${screen ? `<button class="dk on" title="Parar transmissão" onclick="stopShare()">${I('share')}<i class="x">⏹</i></button>` : `<button class="dk shr" title="Compartilhar tela" onclick="shareScreen()">${I('share')}</button>`}
+    <button class="dk shr ${shareAudio ? '' : 'off'}" title="${shareAudio ? 'Som da transmissão: ligado' : 'Som da transmissão: desligado'}" onclick="toggleShareAudio()">${I(shareAudio ? 'speaker' : 'block')}</button>
+    <button class="dk hang" title="Desligar" onclick="leaveVoice()">${I('call')}</button>`;
 }
+function renderVState() { // sala de voz ainda sem você
+  const us = vusers[view.ch.id] || [];
+  $('vstate').innerHTML = `<img class="vmasc" src="assets/m_${us.length ? 'wow' : 'neutral'}.png"><h2>${esc(view.ch.name)}</h2><p class="mut">${us.length ? us.length + (us.length > 1 ? ' pessoas na sala agora' : ' pessoa na sala agora') : 'Ninguém na sala ainda. Seja o primeiro a chegar!'}</p>
+    <div class="vfaces">${us.map(u => `<span title="${esc(u.username)}">${av(u.username, 48)}</span>`).join('')}</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="big2" onclick="joinVoice(false)">${I('call')}Entrar na sala</button><button class="g big2" onclick="joinVoice(true)">${I('camera')}Entrar com câmera</button></div>`;
+}
+function renderVC() { // cartão "Voz conectada" no painel esquerdo
+  $('vcard').innerHTML = local ? `<div class="vc"><i class="pulse"></i><div class="vct"><b>Voz conectada</b><span>${esc(callLabel)}</span></div><button class="rb hang" title="Desligar" onclick="leaveVoice()">${I('call')}</button></div>` : '';
+}
+function callFriend(id) { openDM(id).then(() => joinVoice(false)); }
 function renderFriends() {
-  const row = (u, b) => `<div class="fr">${avs(u.username, 40, u.status)}<b>${esc(u.username)}</b><span>${b}</span></div>`;
-  let h;
-  if (tab === 'all') h = fr.friends.map(u => row(u, `<button class="g" onclick="openDM(${u.id})">${I('chat')}</button><button class="g" onclick="frAct('remove',${u.id})">${I('delete')}</button>`)).join('') || '<div class="empty"><img src="assets/m_sad.png">Você ainda não tem amigos por aqui.<br>Use a aba <b>Adicionar amigo</b> e traga sua turma!</div>';
-  else if (tab === 'pend') h = fr.incoming.map(u => row(u, `<button onclick="frAct('accept',${u.id})">✔</button><button class="g" onclick="frAct('remove',${u.id})">${I('delete')}</button>`)).join('') + fr.outgoing.map(u => row(u, '<small class="mut">enviado</small>')).join('') || '<div class="empty"><img src="assets/m_confused.png">Nenhum pedido pendente.</div>';
-  else h = '<p>Digite o nome de usuário do seu amigo:</p><div style="display:flex;gap:8px"><input id="fi" placeholder="Nome de usuário"><button onclick="addFriend()" style="white-space:nowrap">Enviar pedido</button></div>';
-  $('fr').innerHTML = `<div class="hero2"><img src="assets/m_fly.png"><div><b>Onde a amizade ganha asas.</b><span>Conectando amizades, espalhando brasilidade!</span><small>Sua turma, sua voz, seu Brasil</small></div></div>` + h;
+  const on = fr.friends.filter(f => f.status && f.status !== 'offline'), hr = new Date().getHours();
+  const greet = hr < 12 ? 'Bom dia' : hr < 18 ? 'Boa tarde' : 'Boa noite';
+  const card = (u, btns) => `<div class="fcard"><span class="pl" data-u="${encodeURIComponent(u.username)}">${avs(u.username, 64, u.status)}</span><b class="pl" data-u="${encodeURIComponent(u.username)}">${esc(u.username)}</b><small>${ST[u.status] || 'Offline'}</small><div class="fb">${btns}</div></div>`;
+  const friendBtns = u => `<button class="g" title="Mensagem" onclick="openDM(${u.id})">${I('chat')}</button><button class="g" title="Ligar" onclick="callFriend(${u.id})">${I('call')}</button><button class="g" title="Remover amigo" onclick="frAct('remove',${u.id})">${I('delete')}</button>`;
+  let h = '';
+  if (tab === 'all') {
+    const stat = (n, l, ic) => `<div class="stat"><img src="assets/${ic}.png"><div><b>${n}</b><span>${l}</span></div></div>`;
+    const qa = (ic, t, d, fn) => `<div class="qa" onclick="${fn}"><img src="assets/${ic}.png"><div><b>${t}</b><span>${d}</span></div></div>`;
+    h = `<div class="hero3"><div><small>${greet.toUpperCase()},</small><h1>${esc(me.username)}!</h1><p>${on.length ? `${on.length} ${on.length > 1 ? 'amigos estão online' : 'amigo está online'} agora. Que tal um papo?` : 'Ninguém online por enquanto. Que tal chamar a turma?'}</p><span class="tag">Sua turma, sua voz, seu Brasil</span></div><img src="assets/m_fly.png"></div>
+      <div class="stats">${stat(on.length, 'online agora', 'friends')}${stat(fr.friends.length, 'amigos', 'members')}${stat(groups.length, 'grupos', 'createserver')}${stat(fr.incoming.length, 'pedidos', 'bell')}</div>
+      <div class="qas">${qa('addfriend', 'Adicionar amigo', 'Traga sua turma pro Lindesk', "setTab('add')")}${qa('createserver', 'Criar um grupo', 'Seu cantinho com canais de texto e voz', 'newGroup()')}${qa('joinserver', 'Entrar em um grupo', 'Use um código de convite', 'joinGroup()')}</div>
+      <div class="sh">SUA TURMA — ${fr.friends.length}</div>` + (fr.friends.length ? `<div class="fgrid">${fr.friends.map(u => card(u, friendBtns(u))).join('')}</div>` : '<div class="empty"><img src="assets/m_sad.png">Você ainda não tem amigos por aqui.<br>Use <b>Adicionar amigo</b> e traga sua turma!</div>')
+      + `<div class="tip"><img src="assets/m_cool.png"><div><b>Dica da arara</b><br><span class="mut">${PHRASES[new Date().getDate() % PHRASES.length]}</span></div></div>`;
+  } else if (tab === 'on') {
+    h = `<div class="sh">ONLINE — ${on.length}</div>` + (on.length ? `<div class="fgrid">${on.map(u => card(u, friendBtns(u))).join('')}</div>` : '<div class="empty"><img src="assets/m_confused.png">Ninguém online agora.</div>');
+  } else if (tab === 'pend') {
+    const rows = fr.incoming.map(u => card(u, `<button title="Aceitar" onclick="frAct('accept',${u.id})">✔ Aceitar</button><button class="g" title="Recusar" onclick="frAct('remove',${u.id})">${I('delete')}</button>`)).join('') + fr.outgoing.map(u => card(u, '<small class="mut">pedido enviado</small>')).join('');
+    h = `<div class="sh">PENDENTES — ${fr.incoming.length + fr.outgoing.length}</div>` + (rows ? `<div class="fgrid">${rows}</div>` : '<div class="empty"><img src="assets/m_confused.png">Nenhum pedido pendente.</div>');
+  } else {
+    h = '<div class="empty"><img src="assets/m_love.png">Digite o nome de usuário do seu amigo:</div><div style="display:flex;gap:8px;max-width:520px;margin:0 auto"><input id="fi" placeholder="Nome de usuário"><button onclick="addFriend()" style="white-space:nowrap">Enviar pedido</button></div>';
+  }
+  $('fr').innerHTML = h;
 }
 const setTab = t => { tab = t; render(); };
 async function addFriend() { try { await api('/friends/request', 'POST', { username: $('fi').value }); $('fi').value = ''; toast('Pedido enviado!'); } catch (e) { toast(e.message); } }
@@ -378,8 +396,66 @@ async function newChannel(type) {
 function copyCode() { navigator.clipboard.writeText(view.g.code); toast('Código copiado!'); }
 function addMsg(m) {
   if (m.avatar) avatars[m.username] = m.avatar; const d = document.createElement('div'); d.className = 'm'; const t = new Date(m.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-  d.innerHTML = `${av(m.username)}<div><b>${esc(m.username)}</b> <small>${t}</small><div>${esc(m.text)}</div></div>`; $('msgs').append(d); $('msgs').scrollTop = 1e9;
+  const im = /^\[img:([0-9a-f]{16,32})\]$/.exec(m.text || ''), bd = im ? `<img class="mimg" src="${SERVER_URL}/img/${im[1]}" onclick="viewImg(this.src)" onload="$('msgs').scrollTop=1e9">` : esc(m.text), un = encodeURIComponent(m.username);
+  d.innerHTML = `<span class="pl" data-u="${un}">${av(m.username)}</span><div><b class="pl" data-u="${un}">${esc(m.username)}</b> <small>${t}</small><div>${bd}</div></div>`; $('msgs').append(d); $('msgs').scrollTop = 1e9;
 }
+// ---- Perfil, banner e imagens ----
+const hx6 = c => /^#[0-9a-f]{6}$/i.test(c || '') ? c : null;
+const lumi = c => { const n = parseInt(c.slice(1), 16); return (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255; };
+function profCard(p, actions) {
+  const c1 = hx6(p.c1) || '#0f3d22', c2 = hx6(p.c2) || '#04100a', src = p.bannerSrc || (p.banner ? `${SERVER_URL}/img/${p.banner}` : null);
+  const ban = src ? `url(${src})` : `linear-gradient(120deg,${c1},${c2})`, fg = (lumi(c1) + lumi(c2)) / 2 > 0.6 ? '#07130c' : '#fff';
+  return `<div class="pcard" style="background:linear-gradient(180deg,${c1},${c2});color:${fg}"><div class="pban" style="background-image:${ban}"></div><div class="pav">${avs(p.username, 92, p.status)}</div><div class="pbody"><h3>${esc(p.username)}</h3><small>${ST[p.status] || 'Offline'}</small>${p.bio ? `<p>${esc(p.bio)}</p>` : ''}${actions ? `<div class="pact">${actions}</div>` : ''}</div></div>`;
+}
+async function openProfile(u) {
+  try {
+    const p = await api('/profile/' + encodeURIComponent(u)); if (p.avatar) avatars[p.username] = p.avatar;
+    const f = fr.friends.find(x => x.username.toLowerCase() === p.username.toLowerCase());
+    const act = p.username.toLowerCase() === me.username.toLowerCase() ? `<button onclick="closeDlg();showSettings('profile')">${I('lapis')}Editar perfil</button>` : f ? `<button onclick="closeDlg();openDM(${f.id})">Enviar mensagem</button>` : '';
+    $('dlg').innerHTML = `<div class="pwrap">${profCard(p, act)}<button class="g" onclick="closeDlg()">Fechar</button></div>`; $('dlg').style.display = 'flex';
+  } catch (e) { toast(e.message); }
+}
+document.addEventListener('click', e => { const t = e.target.closest && e.target.closest('[data-u]'); if (t) openProfile(decodeURIComponent(t.dataset.u)); });
+let pedit = null;
+async function profileEditor() {
+  const p = await api('/profile/' + encodeURIComponent(me.username));
+  pedit = { username: me.username, status: me.status, banner: p.banner, bannerData: null, c1: hx6(p.c1) || '#0f3d22', c2: hx6(p.c2) || '#04100a', bio: p.bio || '' };
+  const pre = [['Bandeira', '#009c3b', '#002776'], ['Arara-azul', '#1e5bd8', '#0b1f4d'], ['Arara-vermelha', '#d62828', '#3a0a0a'], ['Pôr do sol', '#ff9e00', '#6a1b4d'], ['Mata', '#14532d', '#04100a'], ['Ouro', '#ffdf00', '#7a5c00']];
+  return `<h2>Perfil</h2><div id="ppv"></div>
+    <div class="row2"><div><b>Banner</b><span>PNG, JPG, WEBP ou GIF animado (GIF até 3 MB).</span></div><span style="display:flex;gap:8px"><button class="g" onclick="$('bfile').click()">${I('imagem')}Escolher</button><button class="g" onclick="pedit.banner=null;pedit.bannerData=null;updPv()">Remover</button></span></div>
+    <div class="row2"><div><b>Cores do perfil</b><span>Degradê: cor 1 em cima, cor 2 embaixo.</span></div><span style="display:flex;gap:8px;align-items:center"><input type="color" id="pc1" value="${pedit.c1}" oninput="pedit.c1=this.value;updPv()"><input type="color" id="pc2" value="${pedit.c2}" oninput="pedit.c2=this.value;updPv()"></span></div>
+    <div class="pre">${pre.map(([n, a, b]) => `<button class="chip" style="background:linear-gradient(180deg,${a},${b})" onclick="pedit.c1='${a}';pedit.c2='${b}';$('pc1').value='${a}';$('pc2').value='${b}';updPv()">${n}</button>`).join('')}</div>
+    <div class="row2" style="flex-direction:column;align-items:stretch;gap:8px"><b>Sobre mim</b><textarea maxlength="190" oninput="pedit.bio=this.value;updPv()" placeholder="Conte um pouco sobre você...">${esc(p.bio || '')}</textarea></div>
+    <div class="row2" style="border:0"><span></span><button onclick="saveProfile()">Salvar perfil</button></div><input type="file" id="bfile" accept="image/*" hidden onchange="pickBanner(this)">`;
+}
+function updPv() { const e = $('ppv'); if (e && pedit) e.innerHTML = profCard({ ...pedit, bannerSrc: pedit.bannerData || null }); }
+async function fileToData(f, max, ql) {
+  if (f.type === 'image/gif') { if (f.size > 3e6) throw new Error('GIF muito grande (máx. 3 MB)'); return await new Promise(r => { const rd = new FileReader(); rd.onload = () => r(rd.result); rd.readAsDataURL(f); }); }
+  const bmp = await createImageBitmap(f), k = Math.min(1, max / Math.max(bmp.width, bmp.height)), c = document.createElement('canvas');
+  c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k); c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height); return c.toDataURL('image/jpeg', ql);
+}
+async function pickBanner(inp) {
+  const f = inp.files[0]; inp.value = ''; if (!f || !f.type.startsWith('image/')) return;
+  try { pedit.bannerData = await fileToData(f, 960, 0.85); updPv(); } catch (e) { toast(e.message); }
+}
+async function saveProfile() {
+  try {
+    let banner = pedit.banner || null;
+    if (pedit.bannerData) banner = (await api('/upload', 'POST', { data: pedit.bannerData })).id;
+    await api('/me/profile', 'POST', { banner, c1: pedit.c1, c2: pedit.c2, bio: pedit.bio.trim() });
+    pedit.banner = banner; pedit.bannerData = null; toast('Perfil salvo!');
+  } catch (e) { toast(e.message); }
+}
+async function sendImage(f) {
+  if (!chatId || !f || !f.type.startsWith('image/')) return;
+  try { toast('Enviando imagem...'); const data = await fileToData(f, 1280, 0.82), r = await api('/upload', 'POST', { data }); socket.emit('chat:send', { cid: chatId, text: `[img:${r.id}]` }); }
+  catch (e) { toast(e.message || 'Falha ao enviar a imagem'); }
+}
+function viewImg(src) { const d = document.createElement('div'); d.className = 'lbox'; d.innerHTML = `<img src="${src}">`; d.onclick = () => d.remove(); document.body.append(d); }
+const noSet = () => $('settings').style.display !== 'flex';
+document.addEventListener('paste', e => { const f = e.clipboardData && e.clipboardData.files[0]; if (f && f.type.startsWith('image/') && noSet()) { e.preventDefault(); sendImage(f); } });
+document.addEventListener('dragover', e => e.preventDefault());
+document.addEventListener('drop', e => { const f = e.dataTransfer && e.dataTransfer.files[0]; e.preventDefault(); if (f && f.type.startsWith('image/') && noSet()) sendImage(f); });
 function send() { if (chatId && $('msg').value) { socket.emit('chat:send', { cid: chatId, text: $('msg').value }); $('msg').value = ''; } }
 function ask(title, ph) { return new Promise(res => { $('mt').textContent = title; $('mi').placeholder = ph; $('mi').value = ''; $('modal').style.display = 'block'; setTimeout(() => $('mi').focus(), 50);
   const done = v => { $('modal').style.display = 'none'; res(v); };
@@ -510,6 +586,8 @@ async function showSettings(t) {
     const stRow = window.lindeskApp && !lindeskApp.mobile ? `<div class="row2"><div><b>Iniciar com o Windows</b><span>Abre o Lindesk em segundo plano quando você liga o PC.</span></div><label class="tg"><input type="checkbox" ${st ? 'checked' : ''} onchange="lindeskApp.setStartup(this.checked)"><i></i></label></div>` : '';
     body = `<h2>Minha conta</h2><div class="row2" style="border:0"><div style="display:flex;align-items:center;gap:16px">${avs(me.username, 80, me.status)}<div><b style="font-size:20px">${esc(me.username)}</b><span>Versão ${ver}</span></div></div><button class="g" onclick="$('file').click()">${I('palette')}Alterar foto</button></div>
       <div class="row2"><div><b>Sair da conta</b><span>Você precisará entrar de novo neste aparelho.</span></div><button class="g" onclick="logout()">${I('logout')}Sair</button></div>${stRow}<div class="row2"><div><b>Deletar conta</b><span>Apaga sua conta, seus amigos e os grupos que você criou.</span></div><button class="r" onclick="openDelAccount()">${I('delete')}Deletar</button></div>`;
+  } else if (t === 'profile') {
+    body = await profileEditor();
   } else if (t === 'voice') {
     try { (await navigator.mediaDevices.getUserMedia({ audio: true })).getTracks().forEach(x => x.stop()); } catch (e) {}
     const d = await navigator.mediaDevices.enumerateDevices();
@@ -523,8 +601,9 @@ async function showSettings(t) {
     const so = (v, n, d) => `<div class="so ${me.status === v ? 'on' : ''}" onclick="setStatus('${v}')"><i class="dot ${v}"></i><div><b>${n}</b><span>${d}</span></div></div>`;
     body = `<h2>Status</h2>` + so('online', 'Disponível', 'Seus amigos veem que você está online.') + so('dnd', 'Não perturbe', 'Você continua online, mas sem sons nem notificações.') + so('offline', 'Offline', 'Você aparece como offline para todos, mas usa o app normalmente.');
   }
-  const nav = [['account', 'Minha conta', 'friends'], ['voice', 'Voz e vídeo', 'mic'], ['notif', 'Notificações', 'bell'], ['status', 'Status', 'pin']];
+  const nav = [['account', 'Minha conta', 'friends'], ['profile', 'Perfil', 'palette'], ['voice', 'Voz e vídeo', 'mic'], ['notif', 'Notificações', 'bell'], ['status', 'Status', 'pin']];
   el.innerHTML = `<div class="sn"><h4>CONFIGURAÇÕES</h4>${nav.map(([k, l, i]) => `<div class="it ${k === t ? 'on' : ''}" onclick="showSettings('${k}')">${I(i)}${l}</div>`).join('')}</div><div class="sb"><button class="g sx" onclick="closeSettings()">✕ ESC</button><div class="sc">${body}</div></div>`;
+  if (t === 'profile') updPv();
 }
 // ---- Atualização automática (avisos vindos do main.js) ----
 let updT;
@@ -540,14 +619,14 @@ if (window.lindeskApp) lindeskApp.onUpdate(d => {
   }
 });
 // ---- Chamadas (WebRTC em malha) ----
-let rawStream = null, dn = null, callRoom = null, noiseOn = true, micOn = true, deaf = false, micId = '', spkId = '', screen = null, shareAudio = true, vusers = {}, callTimer, ringT;
+let callLabel = '', actx, rawStream = null, dn = null, callRoom = null, noiseOn = true, micOn = true, deaf = false, micId = '', spkId = '', screen = null, shareAudio = true, vusers = {}, callTimer, ringT;
 const names = {}, scrIds = {};
 const sig = (to, data) => socket.emit('voice:signal', { to, data });
 const lbl = (id, sid) => (names[id] || 'Alguém') + (scrIds[id] === sid ? ' • tela' : '');
 const roomId = () => view.t === 'dm' ? view.cid : view.ch && view.ch.type === 'voice' ? view.ch.id : null;
 function spinLogo() { const i = $('home').querySelector('img'); i.classList.remove('sp'); void i.offsetWidth; i.classList.add('sp'); }
 function updMe() { $('me').textContent = $('me').title = me.username; $('avw').innerHTML = avs(me.username, 38, me.status || 'online'); }
-function updBar() { $('bset').innerHTML = I('settings'); $('bmic').innerHTML = I(micOn ? 'mic' : 'micoff'); $('bdeaf').innerHTML = I('headphones'); $('bmic').classList.toggle('off', !micOn); $('bdeaf').classList.toggle('off', deaf); updDock(); }
+function updBar() { $('bset').innerHTML = I('settings'); $('bmic').innerHTML = I(micOn ? 'mic' : 'micoff'); $('bdeaf').innerHTML = I('headphones'); $('bmic').classList.toggle('off', !micOn); $('bdeaf').classList.toggle('off', deaf); }
 function ring(on) {
   clearInterval(ringT); if (!on || me.status === 'dnd' || !prefs.sound) return; const ac = ring.ac || (ring.ac = new AudioContext());
   const beep = () => [0, .25].forEach((d, i) => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = i ? 523 : 659; g.gain.value = .15; o.connect(g); g.connect(ac.destination); o.start(ac.currentTime + d); o.stop(ac.currentTime + d + .2); });
@@ -570,7 +649,8 @@ async function joinVoice(video) {
   catch (e) { return toast('Não consegui acessar o microfone/câmera'); }
   local.getAudioTracks().forEach(t => t.enabled = micOn);
   tile('local', local, true, 'Você');
-  callRoom = room; socket.emit('voice:join', room); if (prefs.join) playSound('join'); renderMain();
+  callRoom = room; socket.emit('voice:join', room); if (prefs.join) playSound('join');
+  callLabel = view.t === 'dm' ? '@ ' + view.f.username : '🔊 ' + view.ch.name; renderVC(); renderMain();
   if (view.t === 'dm') showCall(`Chamando ${view.f.username}...`, view.f.username, false);
 }
 async function shareScreen() {
@@ -588,7 +668,7 @@ function stopShare() {
   renderMain();
 }
 function toggleShareAudio() { shareAudio = !shareAudio; renderMain(); }
-function toggleMic() { micOn = !micOn; if (local) local.getAudioTracks().forEach(t => t.enabled = micOn); updBar(); }
+function toggleMic() { micOn = !micOn; if (local) local.getAudioTracks().forEach(t => t.enabled = micOn); updBar(); renderDock(); }
 function toggleDeaf() { deaf = !deaf; document.querySelectorAll('#tiles .tile').forEach(d => { if (d.id !== 't-local' && d.id !== 't-screen') d.querySelector('video').muted = deaf; }); updBar(); }
 async function openMenuOld() {
   const m = $('menu'); if (m.style.display === 'block') { m.style.display = 'none'; return; }
@@ -643,7 +723,7 @@ function makePeer(id) {
   local.getTracks().forEach(t => pc.addTrack(t, local));
   if (screen) { sig(id, { screen: screen.id }); screen.getTracks().forEach(t => pc.addTrack(t, screen)); }
   pc.onicecandidate = e => e.candidate && sig(id, { candidate: e.candidate, sid: pc.sid, rsid: pc.rsid });
-  pc.ontrack = e => { const st = e.streams[0], k = id + st.id; tile(k, st, deaf, lbl(id, st.id)); st.onremovetrack = () => $('t-' + k)?.remove(); };
+  pc.ontrack = e => { const st = e.streams[0], k = id + st.id; tile(k, st, deaf, lbl(id, st.id)); st.onremovetrack = () => { const d = $('t-' + k); if (!d) return; if (!st.getTracks().length) d.remove(); else if (!st.getVideoTracks().length) d.classList.add('aud'); }; };
   pc.onnegotiationneeded = async () => {
     try { pc.making = true; await pc.setLocalDescription(); sig(id, { desc: pc.localDescription, sid: pc.sid, rsid: pc.rsid }); } catch (e) { console.warn('oferta', e); } finally { pc.making = false; }
   };
@@ -652,7 +732,7 @@ function makePeer(id) {
 }
 async function onSignal({ from, username, data }) {
   names[from] = username;
-  if (data.screen) { scrIds[from] = data.screen; const n = $('t-' + from + data.screen); if (n) n.querySelector('.nm').textContent = lbl(from, data.screen); return; }
+  if (data.screen) { scrIds[from] = data.screen; const n = $('t-' + from + data.screen); if (n) { n.querySelector('.nm').textContent = lbl(from, data.screen); n.classList.add('scr'); } return; }
   if (data.screenOff) { $('t-' + from + data.screenOff)?.remove(); delete scrIds[from]; return; }
   if (!local) return; hideCall();
   let pc = peers[from];
@@ -677,22 +757,38 @@ async function onSignal({ from, username, data }) {
   };
   pc.chain = (pc.chain || Promise.resolve()).then(handle); // processa uma mensagem por vez, na ordem
 }
+function watch(stream, d) { // anel amarelo em volta de quem está falando
+  if (!stream.getAudioTracks().length) return;
+  try {
+    actx = actx || new AudioContext(); const an = actx.createAnalyser(); an.fftSize = 512; actx.createMediaStreamSource(stream).connect(an); const buf = new Uint8Array(an.fftSize);
+    const iv = setInterval(() => { if (!d.isConnected) return clearInterval(iv); an.getByteTimeDomainData(buf); let m = 0; for (const x of buf) m = Math.max(m, Math.abs(x - 128)); d.classList.toggle('speak', m > 12); }, 120);
+  } catch (e) {}
+}
+async function toggleCam() {
+  if (!local) return; const vt = local.getVideoTracks()[0];
+  if (vt) { Object.values(peers).forEach(p => p.getSenders().filter(x => x.track === vt).forEach(x => p.removeTrack(x))); local.removeTrack(vt); vt.stop(); $('t-local')?.classList.add('aud'); }
+  else { try { const t = (await navigator.mediaDevices.getUserMedia({ video: true })).getVideoTracks()[0]; local.addTrack(t); Object.values(peers).forEach(p => p.addTrack(t, local)); $('t-local')?.classList.remove('aud'); } catch (e) { return toast('Não consegui acessar a câmera'); } }
+  renderDock();
+}
 function tile(key, stream, mute, label) {
-  if ($('t-' + key)) return; const d = document.createElement('div'); d.className = 'tile'; d.id = 't-' + key;
-  const v = document.createElement('video'); v.srcObject = stream; v.autoplay = true; v.muted = mute; if (spkId && v.setSinkId) v.setSinkId(spkId).catch(() => {});
+  let d = $('t-' + key);
+  if (d) { if (stream.getVideoTracks().length) d.classList.remove('aud'); return; }
+  d = document.createElement('div'); d.id = 't-' + key; d.className = 'tile';
+  const scr = key === 'screen' || / • tela$/.test(label), who = key === 'local' ? me.username : String(label).replace(/ • tela$/, '');
+  if (!stream.getVideoTracks().length) d.classList.add('aud'); if (scr) d.classList.add('scr');
+  const v = document.createElement('video'); v.srcObject = stream; v.autoplay = true; v.playsInline = true; v.muted = mute; if (spkId && v.setSinkId) v.setSinkId(spkId).catch(() => {});
   d.ondblclick = () => document.fullscreenElement ? document.exitFullscreen() : d.requestFullscreen();
-  d.append(v);
-  if (key !== 'screen') { d.insertAdjacentHTML('beforeend', `<div class="tav">${av(key === 'local' ? me.username : label, 76)}</div>`); const sync = () => d.classList.toggle('novid', !stream.getVideoTracks().some(t => t.readyState === 'live')); stream.addEventListener('addtrack', sync); stream.addEventListener('removetrack', sync); sync(); }
-  d.insertAdjacentHTML('beforeend', `<span class="nm">${esc(label)}</span>`);
+  d.append(v); d.insertAdjacentHTML('beforeend', `<div class="tav">${av(who, 92)}</div><span class="nm">${esc(label)}</span>`);
+  stream.onaddtrack = () => { if (stream.getVideoTracks().length) d.classList.remove('aud'); };
   if (key !== 'local' && key !== 'screen') { // controle de volume de cada transmissão/pessoa
     d.insertAdjacentHTML('beforeend', '<span class="vw" title="Volume">🔊<input type="range" class="vol" min="0" max="1" step="0.05" value="1"></span>');
     const r = d.querySelector('.vol'); r.oninput = () => { v.volume = +r.value; }; r.ondblclick = e => e.stopPropagation();
   }
-  $('tiles').append(d);
+  $('tiles').append(d); if (!scr) watch(stream, d);
 }
 function closePeer(id) { peers[id]?.close(); delete peers[id]; delete names[id]; delete scrIds[id]; [...$('tiles').children].forEach(v => v.id.startsWith('t-' + id) && v.remove()); }
 function leaveVoice() {
-  stopShare(); Object.keys(peers).forEach(closePeer); local?.getTracks().forEach(t => t.stop()); rawStream?.getTracks().forEach(t => t.stop()); rawStream = null; if (dn) { dn.ctx.close().catch(() => {}); dn = null; } local = null; callRoom = null; $('tiles').innerHTML = ''; socket?.emit('voice:leave'); hideCall(); try { renderMain(); } catch (e) {}
+  stopShare(); Object.keys(peers).forEach(closePeer); local?.getTracks().forEach(t => t.stop()); rawStream?.getTracks().forEach(t => t.stop()); rawStream = null; if (dn) { dn.ctx.close().catch(() => {}); dn = null; } local = null; callRoom = null; $('tiles').innerHTML = ''; socket?.emit('voice:leave'); hideCall(); callLabel = ''; renderVC(); renderMain();
 }
 (async function restoreSession() { // mantém o login depois de fechar e abrir o app
   let s = null; try { s = JSON.parse(localStorage.getItem('lindeskSession')); } catch (e) {}
